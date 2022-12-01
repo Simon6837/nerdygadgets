@@ -44,7 +44,7 @@ function addProductToCart($stockItemID)
     $cart[$stockItemID] = array_key_exists($stockItemID, $cart) ? $cart[$stockItemID] + 1 : 1;
     saveCart($cart);
     // send the user back to view.php with the stockItemID as id
-    header("Location: " . $_SERVER['HTTP_REFERER'] . "&showSuccessMessage=true");
+    header("Location: view.php?id=" . $stockItemID . "&showSuccessMessage=true");
 }
 
 /**
@@ -100,6 +100,6 @@ function checkForModification()
     }
     //if one of the above actions is done, remove the param from the url to prevent rerunning the action on a page reload
     if (isset($_GET['removeId']) || isset($_GET['deleteId'])) {
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        header('Location: ' . $_SERVER['PHP_SELF']);
     }
 }
