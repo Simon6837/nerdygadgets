@@ -36,18 +36,6 @@ tbody tr td {
   font-family: MmrText;
   src: url(/Public/fonts/mmrtext.ttf);
 }
-.shoppingcartAmountBubble {
-  background-color: var(--secondaryTextColor);
-  position: fixed;
-  right: 0px;
-  margin-right: 20px;
-  margin-top: 70px;
-  border-radius: 50%;
-  min-width: 18px;
-  font-size: 11px;
-  text-align: center;
-  z-index: 70;
-}
 .notificationBox {
   position: fixed;
   bottom: 0;
