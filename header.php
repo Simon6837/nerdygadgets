@@ -52,6 +52,14 @@ $databaseConnection = connectToDatabase();
             </div>
             <!-- code voor US3: zoeken -->
             <div id="Icons">
+                <?php 
+                if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+                    ?>
+                    <div class='shoppingcartAmountBubble'><?php print array_sum($_SESSION['cart']) ?></div>
+                <?php
+                }
+                ?>
+                
                 <ul id="ul-class-navigation">
                     <li>
                         <a href="browse.php" class="HrefDecoration"><i class="fas fa-search red"></i></a>

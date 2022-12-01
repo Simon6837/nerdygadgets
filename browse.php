@@ -245,11 +245,7 @@ function berekenVerkoopPrijs($adviesPrijs, $btw)
 
 <!-- einde zoekresultaten die links van de zoekbalk staan -->
 <!-- einde code deel 3 van User story: Zoeken producten  -->
-<!--<script>-->
-<!--    document.querySelector("#StockItemFrameRight").addEventListener("click", function() {-->
-<!--        document.querySelector("#cartModal").classList.remove("hide");-->
-<!--    });-->
-<!--</script>-->
+
 <div id="ResultsArea" class="Browse">
     <?php
     if (isset($ReturnableResult) && count($ReturnableResult) > 0) {
@@ -273,12 +269,6 @@ function berekenVerkoopPrijs($adviesPrijs, $btw)
                         <div class="CenterPriceLeftChild">
                             <h1 class="StockItemPriceText">€<?php print sprintf(" %0.2f", berekenVerkoopPrijs($row["RecommendedRetailPrice"], $row["TaxRate"])); ?></h1>
                             <h6>Inclusief BTW </h6>
-                            <div>
-
-                            </div>
-                        </div>
-                        <div id="shoppingCartProductIcon">
-                            <i class="fas fa-cart-plus red cart-icon"></i>
                         </div>
                     </div>
                     <h1 class="StockItemID">Artikelnummer: <?php print $row["StockItemID"]; ?></h1>
