@@ -74,18 +74,18 @@ tbody tr td {
 }
 #cartModal {
   position: fixed;
-  right: 23px;
+  right: 13px;
   z-index: 69;
   top: 110px;
+  max-height: 80vh;
+  overflow-y: scroll;
 }
 #cartModal table {
-  max-height: 80vh;
   background-color: var(--backgroundColor);
-  overflow-y: scroll;
   margin: 0 auto;
   border-radius: 15px;
   box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important;
-  margin-top: 20px;
+  margin: 20px;
   color: var(--textColor);
 }
 #cartModal a {

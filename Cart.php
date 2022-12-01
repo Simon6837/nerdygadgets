@@ -1,6 +1,4 @@
 <?php
-//prevent user from running this scritp
-die();
 include __DIR__ . "/header.php";
 include_once "cartfuncties.php";
 ?>
@@ -20,8 +18,6 @@ include_once "cartfuncties.php";
             </th>
         </tr>
         <?php
-        //check if there were any changes to the cart
-        checkForModification();
         $total = 0;
         $cart = getCart();
         //if the cart is empty show it. and prevent running the rest of the code
@@ -50,8 +46,8 @@ include_once "cartfuncties.php";
             //show the item in a table row
         ?>
             <tr class="tableLine">
-                <td><img style='width: 100px' src='<?php print $imagepath; ?>'></td>
-                <td><a id="cart" href='view.php?id=<?php print $key ?>'><?php print $StockItem['StockItemName'] ?></a> <br> <a href='cart.php?deleteId=<?php print $key ?>'>Verwijder</a></td>
+                <td><img onclick="window.location.replace('view.php?id=<?php print $key ?>')" style='width: 100px; cursor: pointer;' src='<?php print $imagepath; ?>'></td>
+                <td><a class="cartName" href='view.php?id=<?php print $key ?>'><?php print $StockItem['StockItemName'] ?></a> <br> <a href='cart.php?deleteId=<?php print $key ?>'>Verwijder</a></td>
                 <td style="text-align:center;" class="itemCartCount"><a href='cart.php?removeId=<?php print $key ?>'><b>-</b> </a><?php print $item ?><a href='cart.php?addId=<?php print $key ?>'><b>+</b> </a></td>
                 <td style="text-align:center;color:red"><i>€<?php print $exPrice ?></i></td>
                 <td style="text-align:center;color:red"><i>€<?php print $exPrice * $item ?></i></td>
