@@ -43,8 +43,6 @@ function addProductToCart($stockItemID)
     $cart = getCart();
     $cart[$stockItemID] = array_key_exists($stockItemID, $cart) ? $cart[$stockItemID] + 1 : 1;
     saveCart($cart);
-    // send the user back to view.php with the stockItemID as id
-    header("Location: " . $_SERVER['HTTP_REFERER'] . "&showSuccessMessage=true");
 }
 
 /**
@@ -81,14 +79,18 @@ function deleteProductFromCart($stockItemID)
  * this function checks if the cart should be modified
  * if it does it wil figure out what needs to change
  * it then calls the required function
- * after it is done it will remove all the parameters from the url
+ * after it is done it will return the user to the page they were on
  * @return void
  */
 function checkForModification()
 {
+    //if the current url contains params, set the param identifier to & to add a new param
+    $character = str_contains($_SERVER['HTTP_REFERER'], '?') ? '&' : '?';
     //add an item when the user clicked the + icon
     if (isset($_GET['addId'])) {
-        addProductToCart($_GET['addId'], false);
+        addProductToCart($_GET['addId']);
+        // send the user back to view.php with the stockItemID as id
+        header("Location: " . $_SERVER['HTTP_REFERER'] . $character . "showAddedMessage=true");
     }
     //remove an item when the user clicked the - icon
     if (isset($_GET['removeId'])) {
@@ -100,6 +102,6 @@ function checkForModification()
     }
     //if one of the above actions is done, remove the param from the url to prevent rerunning the action on a page reload
     if (isset($_GET['removeId']) || isset($_GET['deleteId'])) {
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        header('Location: ' . $_SERVER['HTTP_REFERER'] . $character . "showDeletedMessage=true");
     }
 }
