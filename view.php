@@ -121,7 +121,7 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                     <div class="CenterPriceLeftChild">
                         <div class="StockItemPriceText"><b><?php print sprintf("€ %.2f", $StockItem['SellPrice']); ?></b></div>
                         <div class="InclBtw"> Inclusief BTW </div>
-                        <a href='<?php $_SERVER['PHP_SELF'] ?>?addId=<?php print $_GET['id'] ?>&returnToView=true'>Toevoegen aan winkelwagen</a>
+                        <a href='cart.php?addId=<?php print $_GET['id'] ?>'>Toevoegen aan winkelwagen</a>
                     </div>
                 </div>
             </div>
