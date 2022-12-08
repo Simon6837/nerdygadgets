@@ -751,3 +751,39 @@ ul#ul-class-price li {
 .InclBtw {
   color: var(--textColor);
 }
+
+.editText {
+  width: 300px;
+}
+
+.editContainer {
+  display: flex;  
+  justify-content: center;
+}
+
+.editUserText {
+  font-size: 20px;
+  margin-top: 5px;
+  margin-right: 5px;
+  width: 150px;
+  text-align: right;
+}
+
+.editMargin {
+  margin-top: 5px;
+}
+
+.editButton {
+  width: 50px;
+  height: 50px;
+  padding: 0px;
+  font-size: 24px;
+}
+
+.editButtonBackground {
+  padding: 0px;
+  margin: 0px;
+  margin-left: 5px;
+  border: 0px;
+  background-color: rgba(0, 0, 0, 0.3);
+}

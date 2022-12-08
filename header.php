@@ -59,6 +59,9 @@ $databaseConnection = connectToDatabase();
                     <li id="shoppingCartIcon">
                         <i class="fas fa-shopping-cart red"></i>
                     </li>
+                    <li>
+                        <a href="edit.php" class="HrefDecoration"><i class="fas fa-user red"></i></a>
+                    </li>
                 </ul>
                 <script>
                     document.querySelector("#shoppingCartIcon").addEventListener("mouseover", function() {
