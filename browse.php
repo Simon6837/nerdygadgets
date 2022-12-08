@@ -270,6 +270,9 @@ function berekenVerkoopPrijs($adviesPrijs, $btw)
                             <h1 class="StockItemPriceText">€<?php print sprintf(" %0.2f", berekenVerkoopPrijs($row["RecommendedRetailPrice"], $row["TaxRate"])); ?></h1>
                             <h6>Inclusief BTW </h6>
                         </div>
+                        <div class="shoppingCartProductIcon">
+                            <i class="fas fa-cart-plus red cart-icon"></i>
+                        </div>
                     </div>
                     <h1 class="StockItemID">Artikelnummer: <?php print $row["StockItemID"]; ?></h1>
                     <p class="StockItemName"><?php print $row["StockItemName"]; ?></p>

@@ -763,3 +763,23 @@ ul#ul-class-price li {
 .InclBtw {
   color: var(--textColor);
 }
+
+.shoppingCartProductIcon {
+  height: 30px;
+  width: 30px;
+  bottom: 0px;
+  float: right;
+  font-size: 30px;
+  margin-bottom: 8px;
+  margin-right: 3.75px;
+  margin-top: 85px;
+}
+
+.shoppingCartProductIcon:hover {
+  scale: 1.3;
+}
+
+.cart-icon {
+  height: 100%;
+  width: 100%;
+}
