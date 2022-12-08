@@ -1,4 +1,6 @@
 <?php
+// An API that returns the current temperature of cold products every time it is called
+
 include_once "database.php";
 $databaseConnection = connectToDatabase();
 
