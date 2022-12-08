@@ -53,6 +53,14 @@ include_once "cartfuncties.php";
                 <script>
                     //add an event listener to the input field that changes the amount of the product when the value changes
                     document.getElementById("setProductAmount").addEventListener("change", function() {
+                        //check if the amount is higher than the stock
+                        if (this.value > <?php echo substr($StockItem['QuantityOnHand'], 10) ?>) {
+                                    //if the amount is higher than the stock, ask the user if he wants to still add the product to the cart
+                                    if (!confirm("Er is niet genoeg voorraad, wilt u het product toch toevoegen aan de winkelwagen?")) {
+                                        return;
+                                    }
+                                }
+
                         window.location.replace("cart.php?setAmountId=<?php print $key ?>&amount=" + this.value);
                     });
                 </script>
