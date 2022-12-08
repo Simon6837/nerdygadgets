@@ -16,16 +16,14 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 ?>
 <script>
     async function getTemperature() {
-        let request = await fetch("temperaturefixes.php", {
-        }).then((response) => response.json()).then((data) => {
+        let request = await fetch("temperaturefixes.php", {}).then((response) => response.json()).then((data) => {
             document.getElementById("temperature").innerHTML = `Temperatuur: ${data.data}°C`;
         });
     }
-    if (<?php echo $StockItem['IsChillerStock']?> == 1) {
+    if (<?php echo $StockItem['IsChillerStock'] ?> == 1) {
         getTemperature();
         setInterval(getTemperature, 3000);
     }
-
 </script>
 <div id="CenteredContent">
     <?php
@@ -111,14 +109,23 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                                             print getVoorraadTekst(substr($StockItem['QuantityOnHand'], 10));
                                         } ?></div>
             <div id="temperature">
-                
+
             </div>
             <div id="StockItemHeaderLeft">
                 <div class="CenterPriceLeft">
                     <div class="CenterPriceLeftChild">
                         <div class="StockItemPriceText"><b><?php print sprintf("€ %.2f", $StockItem['SellPrice']); ?></b></div>
                         <div class="InclBtw"> Inclusief BTW </div>
-                        <a href='cart.php?addId=<?php print $_GET['id'] ?>'>Toevoegen aan winkelwagen</a>
+
+                        <input class="AmountInput" id="addToCartAmount" min="1" type="number" value="1">
+                        <div onclick="addProduct()" class="addProduct">Toevoegen aan winkelwagen</div>
+                        <script>
+                            //get the amount of the product and add it to the cart
+                            function addProduct() {
+                                var amount = document.getElementById("addToCartAmount").value;
+                                window.location.href = "cart.php?addId=<?php print $_GET['id'] ?>&amount=" + amount;
+                            }
+                        </script>
                     </div>
                 </div>
             </div>

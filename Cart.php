@@ -48,7 +48,16 @@ include_once "cartfuncties.php";
             <tr class="tableLine">
                 <td><img onclick="window.location.replace('view.php?id=<?php print $key ?>')" style='width: 100px; cursor: pointer;' src='<?php print $imagepath; ?>'></td>
                 <td><a class="cartName" href='view.php?id=<?php print $key ?>'><?php print $StockItem['StockItemName'] ?></a> <br> <a href='cart.php?deleteId=<?php print $key ?>'>Verwijder</a></td>
-                <td style="text-align:center;" class="itemCartCount"><a href='cart.php?removeId=<?php print $key ?>'><b>-</b> </a><?php print $item ?><a href='cart.php?addId=<?php print $key ?>'><b>+</b> </a></td>
+                <!-- change the product amount -->
+                <td style="text-align:center;" class="itemCartCount"><input class="AmountInput" id="setProductAmount" type="number" min="1" value="<?php print $item ?>"></td>
+                <script>
+                    //add an event listener to the input field that changes the amount of the product when the value changes
+                    document.getElementById("setProductAmount").addEventListener("change", function() {
+                        window.location.replace("cart.php?setAmountId=<?php print $key ?>&amount=" + this.value);
+                    });
+                </script>
+                <!-- uncomment to bring back the - and + buttons -->
+                <!-- <td style="text-align:center;" class="itemCartCount"><a href='cart.php?removeId=<?php print $key ?>'><b>-</b> </a><?php print $item ?><a href='cart.php?addId=<?php print $key ?>'><b>+</b> </a></td> -->
                 <td style="text-align:center;color:red"><i>€<?php print $exPrice ?></i></td>
                 <td style="text-align:center;color:red"><i>€<?php print $exPrice * $item ?></i></td>
             </tr>

@@ -8,26 +8,36 @@ if (isset($_GET['showAddedMessage'])) {
     </div>
 <?php
 }
+if (isset($_GET['showAmountChangedMessage'])) {
+?>
+    <div class="notificationBox">
+        <div class="notificationTitle">Gelukt!</div>
+        <div class="notificationText"><?php print $StockItem['StockItemName'] . ' is aangepast' ?></div>
+    </div>
+<?php
+}
 if (isset($_GET['showDeletedMessage'])) {
-    ?>
-        <div class="notificationBox">
-            <div class="notificationTitle">Gelukt!</div>
-            <div class="notificationText"><?php print $StockItem['StockItemName'] . ' is verwijderd uit de winkelmand' ?></div>
-        </div>
-    <?php
-    }
+?>
+    <div class="notificationBox">
+        <div class="notificationTitle">Gelukt!</div>
+        <div class="notificationText"><?php print $StockItem['StockItemName'] . ' is verwijderd uit de winkelmand' ?></div>
+    </div>
+<?php
+}
 ?>
 <script>
     //remove the notification after 3 seconds
     setTimeout(function() {
         $('.notificationBox').fadeOut('slow');
     }, 3000);
-    //remove aall parameters from the url
+    //remove all parameters from the url
     let url = window.location.href;
     url = url.replace('&showAddedMessage', '');
     url = url.replace('&showDeletedMessage', '');
     url = url.replace('?showAddedMessage', '');
     url = url.replace('?showDeletedMessage', '');
+    url = url.replace('&showAmountChangedMessage', '');
+    url = url.replace('?showAmountChangedMessage', '');
     url = url.replace('=true', '');
     //replace the url without the get parameters but don't reload the page
     window.history.replaceState({}, 'document.title', url);

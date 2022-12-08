@@ -36,12 +36,13 @@ function saveCart($cart)
  * if the product already exists in the cart, increase the quantity by one
  * if the product does not exist in the cart, add it
  * @param int $stockItemID the id of the product to add to the cart
+ * @param int $amount the amount of the product to add to the cart
  * @return void
  */
-function addProductToCart($stockItemID)
+function addProductToCart($stockItemID, $amount)
 {
     $cart = getCart();
-    $cart[$stockItemID] = array_key_exists($stockItemID, $cart) ? $cart[$stockItemID] + 1 : 1;
+    $cart[$stockItemID] = array_key_exists($stockItemID, $cart) ? $cart[$stockItemID] + $amount : $amount;
     saveCart($cart);
 }
 
@@ -76,6 +77,19 @@ function deleteProductFromCart($stockItemID)
 }
 
 /**
+ * this function sets the amount of a product in the cart
+ * @param int $stockItemID the id of the product to change
+ * @param int $amount the new amount of the product
+ * @return void
+ */
+function setProductAmount($stockItemID, $amount)
+{
+    $cart = getCart();
+    $cart[$stockItemID] = $amount;
+    saveCart($cart);
+}
+
+/**
  * this function checks if the cart should be modified
  * if it does it wil figure out what needs to change
  * it then calls the required function
@@ -88,9 +102,14 @@ function checkForModification()
     $character = str_contains($_SERVER['HTTP_REFERER'], '?') ? '&' : '?';
     //add an item when the user clicked the + icon
     if (isset($_GET['addId'])) {
-        addProductToCart($_GET['addId']);
+        addProductToCart($_GET['addId'], isset($_GET['amount']) ? $_GET['amount'] : 1);
         // send the user back to view.php with the stockItemID as id
         header("Location: " . $_SERVER['HTTP_REFERER'] . $character . "showAddedMessage=true");
+    }
+    //set the amount of an item when the user changed the amount in the input field
+    if (isset($_GET['setAmountId'])) {
+        setProductAmount($_GET['setAmountId'], $_GET['amount']);
+        header("Location: " . $_SERVER['HTTP_REFERER'] . $character . "showAmountChangedMessage=true");
     }
     //remove an item when the user clicked the - icon
     if (isset($_GET['removeId'])) {
