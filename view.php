@@ -122,7 +122,15 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                         <script>
                             //get the amount of the product and add it to the cart
                             function addProduct() {
-                                var amount = document.getElementById("addToCartAmount").value;
+                                let amount = document.getElementById("addToCartAmount").value;
+                                //check if the amount is higher than the stock
+                                let stock = <?php echo substr($StockItem['QuantityOnHand'], 10) ?>;
+                                if (amount > stock) {
+                                    //if the amount is higher than the stock, ask the user if he wants to still add the product to the cart
+                                    if (!confirm("Er is niet genoeg voorraad, wilt u het product toch toevoegen aan de winkelwagen?")) {
+                                        return;
+                                    }
+                                }
                                 window.location.href = "cart.php?addId=<?php print $_GET['id'] ?>&amount=" + amount;
                             }
                         </script>
