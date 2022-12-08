@@ -44,14 +44,14 @@ include_once "cartfuncties.php";
                 <tr class="tableLine">
                     <td><img onclick="window.location.replace('view.php?id=<?php print $key ?>')" style='width: 100px; cursor: pointer;' src='<?php print $imagepath; ?>'></td>
                     <td><a class="cartName" href='view.php?id=<?php print $key ?>'><?php print $StockItem['StockItemName'] ?></a>
-                    <!-- uncomment the below comments to enable the cartfunctions -->
-                     <!-- <br> <a href='<?php $_SERVER['PHP_SELF'] ?>?deleteId=<?php print $key ?>'>Verwijder</a> -->
+                        <!-- uncomment the below comments to enable the cartfunctions -->
+                        <!-- <br> <a href='<?php $_SERVER['PHP_SELF'] ?>?deleteId=<?php print $key ?>'>Verwijder</a> -->
                     </td>
                     <td style="text-align:center;" class="itemCartCount">
-                    <!-- <a href='<?php $_SERVER['PHP_SELF'] ?>?removeId=<?php print $key ?>'><b>-</b> </a> -->
-                    <?php print $item ?>
-                    <!-- <a href='<?php $_SERVER['PHP_SELF'] ?>?addId=<?php print $key ?>'><b>+</b> </a> -->
-                </td>
+                        <!-- <a href='<?php $_SERVER['PHP_SELF'] ?>?removeId=<?php print $key ?>'><b>-</b> </a> -->
+                        <?php print $item ?>
+                        <!-- <a href='<?php $_SERVER['PHP_SELF'] ?>?addId=<?php print $key ?>'><b>+</b> </a> -->
+                    </td>
                     <td style="text-align:center;color:red"><i>€<?php print $exPrice ?></i></td>
                     <td style="text-align:center;color:red"><i>€<?php print $exPrice * $item ?></i></td>
                 </tr>
@@ -72,9 +72,15 @@ include_once "cartfuncties.php";
             <tr style='text-align: right;'>
                 <!-- <td colspan='5'><a href='https://www.ideal.nl/demo/en/?screens=dskweb&bank=rabo&type=dsk'>Bestellen</a></td> -->
                 <td colspan="5">
-                    <form action="cart.php">
-                        <input class="button2" type="submit" value="Bekijken">
-                    </form>
+                    <?php if (isset($_SESSION['loggedInUserId'])) : ?>
+                        <form action="Order.php">
+                            <input class="button2" type="submit" value="Bestellen">
+                        </form>
+                    <?php else : ?>
+                        <form action="CustomerInfo.php">
+                            <input class="button2" type="submit" value="Bestellen">
+                        </form>
+                    <?php endif; ?>
                 </td>
             </tr>
         <?php } ?>
