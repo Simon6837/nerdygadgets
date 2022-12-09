@@ -15,12 +15,16 @@ $StockItem = getStockItem($_GET['id'], $databaseConnection);
 $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 ?>
 <script>
+    // get product temperature by sending a request to the temperature API
     async function getTemperature() {
-        let request = await fetch("temperaturefixes.php", {}).then((response) => response.json()).then((data) => {
+        let request = await fetch("temperaturefixes.php", {
+        }).then((response) => response.json()).then((data) => {
+            // display the temperature on the page
             document.getElementById("temperature").innerHTML = `Temperatuur: ${data.data}°C`;
         });
     }
-    if (<?php echo $StockItem['IsChillerStock'] ?> == 1) {
+    // only get temperature of cold products
+    if (<?php echo $StockItem['IsChillerStock']?> == 1) {
         getTemperature();
         setInterval(getTemperature, 3000);
     }

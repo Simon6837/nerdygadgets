@@ -12,7 +12,7 @@ $data["woonplaats"] = isset($_POST["woonplaats"]) ? $_POST["woonplaats"] : "";
 ?>
 
 <h1>Voer hier uw gegevens in</h1><br><br>
-<form action="Order.php">
+<form action="viewOrder.php">
 <label>E-mailadres<label style="color: red" >*</label></label>
 <input type="text" name="E-mail" value="<?php print($data["E-mail"]); ?>" required/>
 <label>Naam<label style="color: red" >*</label></label>

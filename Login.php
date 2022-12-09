@@ -39,7 +39,7 @@ if (isset($_POST['button'])){
         if ($passcheck){
             $_SESSION['loggedInUserId'] = $userDetails['personid'];
 
-        $script = "<script>window.location = 'http://localhost/nerdygadgets/';</script>";
+        $script = "<script>window.location = 'http://localhost/nerdygadgets/viewOrder.php';</script>";
         echo $script;
 
         } else{
