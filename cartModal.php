@@ -72,15 +72,9 @@ include_once "cartfuncties.php";
             <tr style='text-align: right;'>
                 <!-- <td colspan='5'><a href='https://www.ideal.nl/demo/en/?screens=dskweb&bank=rabo&type=dsk'>Bestellen</a></td> -->
                 <td colspan="5">
-                    <?php if (isset($_SESSION['loggedInUserId'])) : ?>
-                        <form action="viewOrder.php">
-                            <input class="button2" type="submit" value="Bestellen">
+                        <form action="cart.php">
+                            <input class="button2" type="submit" value="Winkelmand bekijken">
                         </form>
-                    <?php else : ?>
-                        <form action="CustomerInfo.php">
-                            <input class="button2" type="submit" value="Bestellen">
-                        </form>
-                    <?php endif; ?>
                 </td>
             </tr>
         <?php } ?>

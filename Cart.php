@@ -88,11 +88,11 @@ include_once "cartfuncties.php";
             <td colspan="5">
                 <?php if (isset($_SESSION['loggedInUserId'])) : ?>
                     <form action="viewOrder.php">
-                        <input class="button2" type="submit" value="Bestellen">
+                        <input class="button2" type="submit" value="Bestellen met ideal">
                     </form>
                 <?php else : ?>
                     <form action="CustomerInfo.php">
-                        <input class="button2" type="submit" value="Bestellen">
+                        <input class="button2" type="submit" value="Bestellen met ideal">
                     </form>
                 <?php endif; ?>
             </td>
