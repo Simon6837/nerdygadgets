@@ -763,3 +763,30 @@ ul#ul-class-price li {
 .InclBtw {
   color: var(--textColor);
 }
+
+.order-main {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.order-cart-container {
+  width: 45%;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+.order-cart-item {
+  display: flex;
+  justify-content: left;
+  padding: 10px;
+}
+
+.order-details {
+  width: 45%;
+}
+
+.order-cart-image {
+  max-width: 100px;
+  margin-right: 10px;
+}
