@@ -28,7 +28,6 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
         getTemperature();
         setInterval(getTemperature, 3000);
     }
-
 </script>
 <div id="CenteredContent">
     <?php
@@ -114,14 +113,32 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                                             print getVoorraadTekst(substr($StockItem['QuantityOnHand'], 10));
                                         } ?></div>
             <div id="temperature">
-                
+
             </div>
             <div id="StockItemHeaderLeft">
                 <div class="CenterPriceLeft">
                     <div class="CenterPriceLeftChild">
                         <div class="StockItemPriceText"><b><?php print sprintf("€ %.2f", $StockItem['SellPrice']); ?></b></div>
                         <div class="InclBtw"> Inclusief BTW </div>
-                        <a href='cart.php?addId=<?php print $_GET['id'] ?>'>Toevoegen aan winkelwagen</a>
+
+                        <input class="AmountInput" id="addToCartAmount" min="1" type="number" value="1">
+                        <div onclick="addProduct()" class="addProduct">Toevoegen aan winkelwagen</div>
+                        <script>
+                            //get the amount of the product and add it to the cart
+                            function addProduct() {
+                                let amount = parseInt(document.getElementById("addToCartAmount").value);
+                                //if the item is in the cart add the amount to the total amount
+                                let stockInCart = <?php print isset($_SESSION["cart"][$StockItem['StockItemID']]) ? $_SESSION["cart"][$StockItem['StockItemID']] : 0  ?>;
+                                //check if the amount is higher than the stock
+                                if ((amount + stockInCart) > <?php echo substr($StockItem['QuantityOnHand'], 10) ?>) {
+                                    //if the amount is higher than the stock, ask the user if he wants to still add the product to the cart
+                                    if (!confirm("Er is niet genoeg voorraad, wilt u het product toch toevoegen aan de winkelwagen?")) {
+                                        return;
+                                    }
+                                }
+                                window.location.href = "cart.php?addId=<?php print $_GET['id'] ?>&amount=" + amount;
+                            }
+                        </script>
                     </div>
                 </div>
             </div>

@@ -40,7 +40,7 @@ include_once "cartfuncties.php";
         </div>
         <!-- customer data and order button -->
         <div class="order-details">
-            <div class="order-customer">
+            <div>
                 <h2>Klant</h2>
                 <table>
                     <tr>
@@ -60,20 +60,21 @@ include_once "cartfuncties.php";
                         <td>New York</td>
                 </table>
             </div>
-            <div class="order-buttons">
+            <div>
                 <?php
                 if (count($cart) > 0) {
                 ?>
                     <a href="Order.php">
-                        <button class="btn btn-danger order-button">Order</button>
+                        <button class="button2" style="padding: 5px;">Bestellen</button>
                     <?php
                 } else {
                     ?>
-                        <button class="btn btn-danger order-button" disabled>Order</button>
+                        <button class="button2" style="padding: 5px;" disabled>Bestellen</button>
                     <?php
                 }
                     ?>
                     </a>
+                    <img class="idealImage" src="Public/Img/ideal.png" alt="">
             </div>
         </div>
         </main>
