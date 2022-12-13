@@ -44,7 +44,7 @@ if (isset($_POST['button'])) {
             $_SESSION['residence'] = $userDetails['residence'];
             $_SESSION['emailaddress'] = $userDetails['emailaddress'];
 
-            $script = "<script>window.location = 'http://localhost/nerdygadgets/viewOrder.php';</script>";
+            $script = "<script>window.location = './viewOrder.php';</script>";
             echo $script;
         } else {
             print('de ingevoerde combinatie van gebruikersnaam en wachtwoord bestaat niet');
