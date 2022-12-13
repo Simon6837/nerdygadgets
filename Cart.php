@@ -48,7 +48,24 @@ include_once "cartfuncties.php";
             <tr class="tableLine">
                 <td><img onclick="window.location.replace('view.php?id=<?php print $key ?>')" style='width: 100px; cursor: pointer;' src='<?php print $imagepath; ?>'></td>
                 <td><a class="cartName" href='view.php?id=<?php print $key ?>'><?php print $StockItem['StockItemName'] ?></a> <br> <a href='cart.php?deleteId=<?php print $key ?>'>Verwijder</a></td>
-                <td style="text-align:center;" class="itemCartCount"><a href='cart.php?removeId=<?php print $key ?>'><b>-</b> </a><?php print $item ?><a href='cart.php?addId=<?php print $key ?>'><b>+</b> </a></td>
+                <!-- change the product amount -->
+                <td style="text-align:center;" class="itemCartCount"><input class="AmountInput" id="setProductAmount" type="number" min="1" value="<?php print $item ?>"></td>
+                <script>
+                    //add an event listener to the input field that changes the amount of the product when the value changes
+                    document.getElementById("setProductAmount").addEventListener("change", function() {
+                        //check if the amount is higher than the stock
+                        if (this.value > <?php echo substr($StockItem['QuantityOnHand'], 10) ?>) {
+                                    //if the amount is higher than the stock, ask the user if he wants to still add the product to the cart
+                                    if (!confirm("Er is niet genoeg voorraad, wilt u het product toch toevoegen aan de winkelwagen?")) {
+                                        return;
+                                    }
+                                }
+
+                        window.location.replace("cart.php?setAmountId=<?php print $key ?>&amount=" + this.value);
+                    });
+                </script>
+                <!-- uncomment to bring back the - and + buttons -->
+                <!-- <td style="text-align:center;" class="itemCartCount"><a href='cart.php?removeId=<?php print $key ?>'><b>-</b> </a><?php print $item ?><a href='cart.php?addId=<?php print $key ?>'><b>+</b> </a></td> -->
                 <td style="text-align:center;color:red"><i>€<?php print $exPrice ?></i></td>
                 <td style="text-align:center;color:red"><i>€<?php print $exPrice * $item ?></i></td>
             </tr>
@@ -70,12 +87,12 @@ include_once "cartfuncties.php";
             <!-- <td colspan='5'><a href='https://www.ideal.nl/demo/en/?screens=dskweb&bank=rabo&type=dsk'>Bestellen</a></td> -->
             <td colspan="5">
                 <?php if (isset($_SESSION['loggedInUserId'])) : ?>
-                    <form action="Order.php">
-                        <input class="button2" type="submit" value="Bestellen">
+                    <form action="viewOrder.php">
+                        <input class="button2" type="submit" value="Bestellen met ideal">
                     </form>
                 <?php else : ?>
                     <form action="CustomerInfo.php">
-                        <input class="button2" type="submit" value="Bestellen">
+                        <input class="button2" type="submit" value="Bestellen met ideal">
                     </form>
                 <?php endif; ?>
             </td>

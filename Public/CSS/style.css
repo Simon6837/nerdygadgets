@@ -783,4 +783,58 @@ ul#ul-class-price li {
 .cart-icon {
   height: 100%;
   width: 100%;
+.addProduct {
+  background-color: var(--secondaryBackgroundColor);
+  border-radius: 10px;
+  border: 0px;
+  color: #fff;
+  transition: background-color 0.1;
+  text-align: center;
+}
+.addProduct:hover {
+  background-color: var(--mainHoverColor);
+}
+.AmountInput {
+  width: 75px;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+  background-color: var(--secondaryBackgroundColor);
+  border: none;
+  color: var(--textColor);
+  border-radius: 10px;
+}
+.AmountInput:hover {
+  background-color: var(--mainHoverColor);
+}
+
+.order-main {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.order-cart-container {
+  width: 45%;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+.order-cart-item {
+  display: flex;
+  justify-content: left;
+  padding: 10px;
+}
+
+.order-details {
+  width: 45%;
+}
+
+.order-cart-image {
+  max-width: 100px;
+  margin-right: 10px;
+}
+.idealImage {
+  height: 75px;
 }
