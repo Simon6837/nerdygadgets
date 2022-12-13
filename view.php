@@ -148,43 +148,8 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
             <h3>Artikel beschrijving</h3>
             <p><?php print $StockItem['SearchDetails']; ?></p>
         </div>
-        <div id="StockItemSpecifications">
-            <h3>Artikel specificaties</h3>
-            <?php
-            $CustomFields = json_decode($StockItem['CustomFields'], true);
-            if (is_array($CustomFields)) { ?>
-                <table>
-                    <thead>
-                        <th>Naam</th>
-                        <th>Data</th>
-                    </thead>
-                    <?php
-                    foreach ($CustomFields as $SpecName => $SpecText) { ?>
-                        <tr>
-                            <td>
-                                <?php print $SpecName; ?>
-                            </td>
-                            <td>
-                                <?php
-                                if (is_array($SpecText)) {
-                                    foreach ($SpecText as $SubText) {
-                                        print $SubText . " ";
-                                    }
-                                } else {
-                                    print $SpecText;
-                                }
-                                ?>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </table><?php
-                    } else { ?>
-
-                <p><?php print $StockItem['CustomFields']; ?>.</p>
-            <?php
-                    }
-            ?>
-        </div>
+        <!-- deze div kan gebruikt worden voor aanbevolen items -->
+        <!-- <div id="StockItemSpecifications"></div> -->
     <?php
     } else {
     ?><h2 id="ProductNotFound">Het opgevraagde product is niet gevonden.</h2><?php
