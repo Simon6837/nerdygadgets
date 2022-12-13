@@ -49,10 +49,10 @@ include_once "cartfuncties.php";
                 <td><img onclick="window.location.replace('view.php?id=<?php print $key ?>')" style='width: 100px; cursor: pointer;' src='<?php print $imagepath; ?>'></td>
                 <td><a class="cartName" href='view.php?id=<?php print $key ?>'><?php print $StockItem['StockItemName'] ?></a> <br> <a href='cart.php?deleteId=<?php print $key ?>'>Verwijder</a></td>
                 <!-- change the product amount -->
-                <td style="text-align:center;" class="itemCartCount"><input class="AmountInput" id="setProductAmount" type="number" min="1" value="<?php print $item ?>"></td>
+                <td style="text-align:center;" class="itemCartCount"><input class="AmountInput" id="setProductAmount<?php print $key?>" type="number" min="1" value="<?php print $item ?>"></td>
                 <script>
                     //add an event listener to the input field that changes the amount of the product when the value changes
-                    document.getElementById("setProductAmount").addEventListener("change", function() {
+                    document.getElementById("setProductAmount<?php print $key?>").addEventListener("change", function() {
                         //check if the amount is higher than the stock
                         if (this.value > <?php echo substr($StockItem['QuantityOnHand'], 10) ?>) {
                                     //if the amount is higher than the stock, ask the user if he wants to still add the product to the cart
