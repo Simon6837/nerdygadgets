@@ -70,7 +70,6 @@ include_once "cartfuncties.php";
                 <td style=color:red;><u>€<?php print round($total * 1.21, 2) ?></u></td>
             </tr>
             <tr style='text-align: right;'>
-                <!-- <td colspan='5'><a href='https://www.ideal.nl/demo/en/?screens=dskweb&bank=rabo&type=dsk'>Bestellen</a></td> -->
                 <td colspan="5">
                         <form action="cart.php">
                             <input class="button2" type="submit" value="Winkelmand bekijken">
