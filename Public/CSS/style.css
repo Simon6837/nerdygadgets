@@ -783,6 +783,8 @@ ul#ul-class-price li {
 .cart-icon {
   height: 100%;
   width: 100%;
+}
+
 .addProduct {
   background-color: var(--secondaryBackgroundColor);
   border-radius: 10px;
