@@ -360,7 +360,7 @@ ul#ul-class-navigation li :hover {
 #StockItemDescription {
   background-color: var(--secondaryBackgroundColor);
   color: #fff;
-  width: 48%;
+  width: 50%;
   float: left;
   padding: 10px;
   margin-top: 25px;
