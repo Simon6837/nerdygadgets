@@ -72,14 +72,8 @@ include_once "cartfuncties.php";
             <tr style='text-align: right;'>
                 <td colspan="5">
                         <form action="cart.php">
-<<<<<<< HEAD
-                            <input class="button2" type="submit" value="Bekijken">
-                        </form>
-                   
-=======
                             <input class="button2" type="submit" value="Winkelmand bekijken">
                         </form>
->>>>>>> staging
                 </td>
             </tr>
         <?php } ?>

@@ -45,19 +45,19 @@ include_once "cartfuncties.php";
                 <table>
                     <tr>
                         <td>Naam:</td>
-                        <td>John Doe</td>
+                        <td><?php echo $_SESSION["fullname"]; ?></td>
                     </tr>
                     <tr>
                         <td>Adres:</td>
-                        <td>Straatnaam 12</td>
+                        <td><?php echo $_SESSION["address"] ; ?> </td>
                     </tr>
                     <tr>
                         <td>Email:</td>
-                        <td>test@example.com</td>
+                        <td><?php echo $_SESSION["emailaddress"]; ?></td>
                     </tr>
                     <tr>
                         <td>Woonplaats:</td>
-                        <td>New York</td>
+                        <td><?php echo $_SESSION["residence"]; ?></td>
                 </table>
             </div>
             <div>
