@@ -3,14 +3,15 @@ include __DIR__ . "/header.php";
 $databaseConnection = connectToDatabase();
 ?>
 
-<h1>Inloggen</h1><br><br>
+<div class="FormBackground">
+<h1>Inloggen</h1><br>
 
 <form action="login.php" method = post>
-    <label>Gebruikersnaam/ E-mailadres</label>
-    <input type="text" name="Gbrnaam" placeholder="gebruiker@voorbeeld.nl" required/>
-    <label>Wachtwoord</label>
-    <input type="password" name="WW" placeholder="wachtwoord" required>
-    <input class="button2" type="submit" name="button" value="Inloggen">
+    <label class="inputTextFormTitleFirst">Gebruikersnaam/ E-mailadres</label>
+    <input class="inputTextForm" type="text" name="Gbrnaam" placeholder="gebruiker@voorbeeld.nl" required/>
+    <label class="inputTextFormTitle">Wachtwoord</label>
+    <input class="inputTextForm" type="password" name="WW" placeholder="wachtwoord" required>
+    <input class="button2 accountAanmakenTopMargin" type="submit" name="button" value="Inloggen">
 </form>
 
 <?php
@@ -43,10 +44,10 @@ if (isset($_POST['button'])){
         echo $script;
 
         } else{
-            print('de ingevoerde combinatie van gebruikersnaam en wachtwoord bestaat niet');
+            print ("<label class='inputError'><i>De ingevoerde combinatie van gebruikersnaam en wachtwoord bestaat niet</i></label><br>");
         }
     } else{
-        print('de ingevoerde combinatie van gebruikersnaam en wachtwoord bestaat niet');
+        print ("<label class='inputError'><i>De ingevoerde combinatie van gebruikersnaam en wachtwoord bestaat niet</i></label><br>");
     }
 
 
@@ -54,5 +55,4 @@ if (isset($_POST['button'])){
 }
 
 ?>
-
-<!--mysqli_query($databaseConnection, "SELECT logonname, hashedpassword FROM people WHERE logonname = $_POST['Gbrnaam']")-->
+</div>
