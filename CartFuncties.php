@@ -44,11 +44,8 @@ function addProductToCart($stockItemID, $amount)
     $cart = getCart();
     $cart[$stockItemID] = array_key_exists($stockItemID, $cart) ? $cart[$stockItemID] + $amount : $amount;
     saveCart($cart);
-<<<<<<< HEAD
     // send the user back to view.php with the stockItemID as id
     header("Location: view.php?id=" . $stockItemID . "&showSuccessMessage=true");
-=======
->>>>>>> staging
 }
 
 /**
