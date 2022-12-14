@@ -52,7 +52,11 @@ if (isset($_SESSION['loggedInUserId'])) {
         </tr>
         <tr>
             <h1>Adresgegevens</h1>
+<<<<<<< HEAD
         </tr    >
+=======
+        </tr>
+>>>>>>> staging
     </table>
 </body>
 

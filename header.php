@@ -26,6 +26,7 @@ $databaseConnection = connectToDatabase();
 <body>
     <div class="Background">
         <?php
+        //include the little cart view
         include_once('cartModal.php');
         ?>
         <div class="row" id="Header">
@@ -57,7 +58,7 @@ $databaseConnection = connectToDatabase();
                         <a href="browse.php" class="HrefDecoration"><i class="fas fa-search red"></i></a>
                     </li>
                     <li id="shoppingCartIcon">
-                        <i class="fas fa-shopping-cart red"></i>
+                    <a href="cart.php" class="HrefDecoration"><i class="fas fa-shopping-cart red"></i></a>
                     </li>
                     <li>
                         <a href="edit.php" class="HrefDecoration"><i class="fas fa-user red"></i></a>
