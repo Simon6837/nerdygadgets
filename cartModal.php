@@ -71,7 +71,6 @@ include_once "cartfuncties.php";
             </tr>
             <tr style='text-align: right;'>
                 <td colspan="5">
-<<<<<<< HEAD
                     <?php if (isset($_SESSION['loggedInUserId'])) : ?>
                         <form action="Order.php">
                             <input class="button2" type="submit" value="Bestellen">
@@ -81,11 +80,9 @@ include_once "cartfuncties.php";
                             <input class="button2" type="submit" value="Bestellen">
                         </form>
                     <?php endif; ?>
-=======
                         <form action="cart.php">
                             <input class="button2" type="submit" value="Winkelmand bekijken">
                         </form>
->>>>>>> staging
                 </td>
             </tr>
         <?php } ?>
