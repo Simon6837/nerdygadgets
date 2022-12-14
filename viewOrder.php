@@ -14,6 +14,12 @@ include_once "cartfuncties.php";
 
 <body>
     <?php
+    if (!empty($_POST)) {
+        $_SESSION["emailaddress"] = $_POST["E-mail"];
+        $_SESSION["fullname"] = $_POST["naam"];
+        $_SESSION["address"] = $_POST["adres"];
+        $_SESSION["residence"] = $_POST["woonplaats"];
+    }
     $cart = getCart();
     ?>
     <h1>Bestelling</h1>
@@ -45,19 +51,19 @@ include_once "cartfuncties.php";
                 <table>
                     <tr>
                         <td>Naam:</td>
-                        <td>John Doe</td>
+                        <td><?php echo $_SESSION["fullname"]; ?></td>
                     </tr>
                     <tr>
                         <td>Adres:</td>
-                        <td>Straatnaam 12</td>
+                        <td><?php echo $_SESSION["address"] ; ?> </td>
                     </tr>
                     <tr>
                         <td>Email:</td>
-                        <td>test@example.com</td>
+                        <td><?php echo $_SESSION["emailaddress"]; ?></td>
                     </tr>
                     <tr>
                         <td>Woonplaats:</td>
-                        <td>New York</td>
+                        <td><?php echo $_SESSION["residence"]; ?></td>
                 </table>
             </div>
             <div>

@@ -68,7 +68,7 @@
                 $SortName = "price_low_high";
             }
     }
-    $SearchString = str_replace("'", "", $SearchString);
+    $SearchString = str_replace(["'", "\\"], "", $SearchString);
     $searchValues = explode(" ", $SearchString);
 
     $queryBuildResult = "";
