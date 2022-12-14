@@ -40,8 +40,6 @@ tbody tr td {
   font-family: MmrText;
   src: url(/Public/fonts/mmrtext.ttf);
 }
-<<<<<<< HEAD
-=======
 
 .shoppingcartAmountBubble {
   background-color: var(--secondaryTextColor);
@@ -56,7 +54,6 @@ tbody tr td {
   z-index: 70;
 }
 
->>>>>>> staging
 .notificationBox {
   position: fixed;
   bottom: 0;
@@ -829,6 +826,8 @@ ul#ul-class-price li {
   margin-left: 5px;
   border: 0px;
   background-color: rgba(0, 0, 0, 0.3);
+}
+
 .shoppingCartProductIcon {
   height: 30px;
   width: 30px;
