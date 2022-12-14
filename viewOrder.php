@@ -14,6 +14,12 @@ include_once "cartfuncties.php";
 
 <body>
     <?php
+    if (!empty($_POST)) {
+        $_SESSION["emailaddress"] = $_POST["E-mail"];
+        $_SESSION["fullname"] = $_POST["naam"];
+        $_SESSION["address"] = $_POST["adres"];
+        $_SESSION["residence"] = $_POST["woonplaats"];
+    }
     $cart = getCart();
     ?>
     <h1>Bestelling</h1>
