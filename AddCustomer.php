@@ -25,33 +25,29 @@ $inputError = array();
 
 // if button is pressed checks if all input values correspond with set restrictions.
 if (isset($_POST['toevoegen'])){
-    $uppercase = preg_match('@[A-Z]@', $data['WW']);
-    $lowercase = preg_match('@[a-z]@', $data['WW']);
-    $number    = preg_match('@[0-9]@', $data['WW']);
-    $specialChars = preg_match('@[^\w]@', $data['WW']);
     $valuesCorrect = true;
     
-    if (!(str_contains($data['E-mail'], '@') and strlen($data['E-mail'] >= 6 and str_contains((substr($data['E-mail'], -5)), '.')))) {
-        $error[] = 'ongeldig e-mailadres'; $valuesCorrect = false;
+    if (!emailCheck($data['E-mail'])) {
+        $valuesCorrect = false;
         $inputError['email'] = 'error';
     }
-    if ((!(2 < strlen($data['Gbrnaam']) && strlen($data['Gbrnaam']) <21) || str_contains($data['Gbrnaam'], '@'))){
-        $error[] = 'gebruikersnaam voldoet niet aan de eisen';  $valuesCorrect = false;
+    if (!gebruikersnaamCheck($data['Gbrnaam'])){
+        $valuesCorrect = false;
         $inputError['gebruikersnaam'] = 'error';
     }
-    if ((!$uppercase || !$lowercase || !$number || !$specialChars || strlen($data['WW'] <= 12))){
-        $error[] = 'wachtwoord voldoet niet aan de eisen';  $valuesCorrect = false;
+    if (!wachtwoordCheck($data['WW'])){
+        $valuesCorrect = false;
         $inputError['wachtwoord'] = 'error';
     }
-    if (specialChar($data['naam'])){
-        $error[] = 'speciale karakters in naam zijn niet toegestaan'; $valuesCorrect = false;
+    if (specialCharCheck($data['naam'])){
+        $valuesCorrect = false;
         $inputError['naam'] = 'error';
     }
-    if (specialChar($data['adres'])){
-        $error[] = 'speciale karakters in adres zijn niet toegestaan'; $valuesCorrect = false;
+    if (specialCharCheck($data['adres'])){
+        $valuesCorrect = false;
         $inputError['adres'] = 'error';
     }
-    if (specialChar($data['woonplaats'])){
+    if (specialCharCheck($data['woonplaats'])){
         $valuesCorrect = false;
         $inputError['woonplaats'] = 'error';
     }
