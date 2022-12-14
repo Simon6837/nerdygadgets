@@ -29,38 +29,38 @@ if (isset($_POST['toevoegen'])){
     
     if (!emailCheck($data['E-mail'])) {
         $valuesCorrect = false;
-        $inputError['email'] = 'error';
+        $inputError['email'] = true;
     }
-    if (!gebruikersnaamCheck($data['Gbrnaam'])){
+    if (!usernameCheck($data['Gbrnaam'])){
         $valuesCorrect = false;
-        $inputError['gebruikersnaam'] = 'error';
+        $inputError['gebruikersnaam'] = true;
     }
-    if (!wachtwoordCheck($data['WW'])){
+    if (!passwordCheck($data['WW'])){
         $valuesCorrect = false;
-        $inputError['wachtwoord'] = 'error';
+        $inputError['wachtwoord'] = true;
     }
     if (specialCharCheck($data['naam'])){
         $valuesCorrect = false;
-        $inputError['naam'] = 'error';
+        $inputError['naam'] = true;
     }
     if (specialCharCheck($data['adres'])){
         $valuesCorrect = false;
-        $inputError['adres'] = 'error';
+        $inputError['adres'] = true;
     }
     if (specialCharCheck($data['woonplaats'])){
         $valuesCorrect = false;
-        $inputError['woonplaats'] = 'error';
+        $inputError['woonplaats'] = true;
     }
     if (!($data['WW'] == $data['testWW'])){
         $valuesCorrect = false;
-        $inputError['herhaalwachtwoord'] = 'error';
+        $inputError['herhaalwachtwoord'] = true;
     }
     //checks if given values already exist within the database and sends a message when they already exist
     if(mysqli_num_rows(mysqli_query($databaseConnection, "SELECT logonname FROM People WHERE logonname = '". $_POST['Gbrnaam']."'"))){
-        $inputError['gebruikersnaamExists'] = 'error'; $valuesCorrect = false;
+        $inputError['gebruikersnaamExists'] = true; $valuesCorrect = false;
     }
     if(mysqli_num_rows(mysqli_query($databaseConnection, "SELECT emailaddress FROM People WHERE emailaddress = '". $_POST['E-mail']."'"))){
-        $inputError['emailExists'] = 'error'; $valuesCorrect = false;
+        $inputError['emailExists'] = true; $valuesCorrect = false;
     }
     if ($valuesCorrect) {
         //adds the given values to the database if all requirements have been met.
@@ -76,35 +76,35 @@ if (isset($_POST['toevoegen'])){
 <form method="post" action="AddCustomer.php">
     <label class="inputTextFormTitleFirst">E-mailadres<label style="color: red" >*</label></label>
     <input class="inputTextForm" type="text" name="E-mail" value="<?php print($data["E-mail"]); ?>" placeholder="e-mailadres" required/>
-    <?php if (array_key_exists('email', $inputError)) { print ("<label class='inputError'><i>Ongeldig e-mailadres</i></label><br>");}?>
-    <?php if (array_key_exists('emailExists', $inputError)) { print ("<label class='inputError'><i>Er bestaat al een account met dit e-mailadres</i></label><br>");}?>
+    <?php if (isset($inputError['email'])) { print ("<label class='inputError'><i>Ongeldig e-mailadres</i></label><br>");}?>
+    <?php if (isset($inputError['emailExists'])) { print ("<label class='inputError'><i>Er bestaat al een account met dit e-mailadres</i></label><br>");}?>
     
     <label class="inputTextFormTitle">Gebruikersnaam<label style="color: red" >*</label></label>
     <input class="inputTextForm" type="text" name="Gbrnaam" value="<?php print($data["Gbrnaam"]); ?>" placeholder="gebruikersnaam"/>
     <label class="smallTextDesc"><i>Aantal karakters: 3-20, mag geen '@' bevatten</i></label><br>
-    <?php if (array_key_exists('gebruikersnaam', $inputError)) { print ("<label class='inputError'><i>Gebruikernaam voldoet niet aan de eisen</i></label><br>");}?>
-    <?php if (array_key_exists('gebruikersnaamExists', $inputError)) { print ("<label class='inputError'><i>Gebruikersnaam bestaat al</i></label><br>");}?>
+    <?php if (isset($inputError['gebruikersnaam'])) { print ("<label class='inputError'><i>Gebruikernaam voldoet niet aan de eisen</i></label><br>");}?>
+    <?php if (isset($inputError['gebruikersnaamExists'])) { print ("<label class='inputError'><i>Gebruikersnaam bestaat al</i></label><br>");}?>
     
     <label class="inputTextFormTitle">Wachtwoord<label style="color: red" >*</label></label>
     <input class="inputTextForm" type="password" name="WW" value="<?php print($data["WW"]); ?>" placeholder="wachtwoord" required>
     <label class="smallTextDesc"><i>Moet bevatten: Hoofdletter, kleine letter, speciaal karakter, getal</i></label><br>
-    <?php if (array_key_exists('wachtwoord', $inputError)) { print ("<label class='inputError'><i>Wachtwoord voldoet niet aan de eisen</i></label><br>");}?>
+    <?php if (isset($inputError['wachtwoord'])) { print ("<label class='inputError'><i>Wachtwoord voldoet niet aan de eisen</i></label><br>");}?>
     
     <label class="inputTextFormTitle">Herhaal wachtwoord<label style="color: red" >*</label></label>
     <input class="inputTextForm" type="password" name="testWW" value="<?php print($data["testWW"]); ?>" placeholder="herhaal wachtwoord" required>
-    <?php if (array_key_exists('herhaalwachtwoord', $inputError)) { print ("<label class='inputError'><i>Wachtwoorden komen niet overeen</i></label><br>");}?>
+    <?php if (isset($inputError['herhaalwachtwoord'])) { print ("<label class='inputError'><i>Wachtwoorden komen niet overeen</i></label><br>");}?>
     
     <label class="inputTextFormTitle">Naam<label style="color: red" >*</label></label>
     <input class="inputTextForm" type="text" name="naam" value="<?php print($data["naam"]); ?>" placeholder="naam" required/>
-    <?php if (array_key_exists('naam', $inputError)) { print ("<label class='inputError'><i>Speciale karakters in naam zijn niet toegestaan</i></label><br>");}?>
+    <?php if (isset($inputError['naam'])) { print ("<label class='inputError'><i>Speciale karakters in naam zijn niet toegestaan</i></label><br>");}?>
     
     <label class="inputTextFormTitle">Adres<label style="color: red" >*</label></label>
     <input class="inputTextForm" type="text" name="adres" value="<?php print($data["adres"]); ?>" placeholder="adres" required/>
-    <?php if (array_key_exists('adres', $inputError)) { print ("<label class='inputError'><i>Speciale karakters in adres zijn niet toegestaan</i></label><br>");}?>
+    <?php if (isset($inputError['adres'])) { print ("<label class='inputError'><i>Speciale karakters in adres zijn niet toegestaan</i></label><br>");}?>
     
     <label class="inputTextFormTitle">Woonplaats<label style="color: red" >*</label></label>
     <input class="inputTextForm" type="text" name="woonplaats" value="<?php print($data["woonplaats"]); ?>" placeholder="woonplaats" required/>
-    <?php if (array_key_exists('woonplaats', $inputError)) { print ("<label class='inputError'><i>Speciale karakters in woonplaats zijn niet toegestaan</i></label><br>");}?>
+    <?php if (isset($inputError['woonplaats'])) { print ("<label class='inputError'><i>Speciale karakters in woonplaats zijn niet toegestaan</i></label><br>");}?>
     <input class="button2 accountAanmakenTopMargin" type="submit" name="toevoegen" value="Account aanmaken" />
 </form>
 </div>
