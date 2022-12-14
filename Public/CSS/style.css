@@ -795,7 +795,6 @@ ul#ul-class-price li {
   color: var(--textColor);
 }
 
-<<<<<<< HEAD
 .editText {
   width: 300px;
 }
@@ -830,7 +829,6 @@ ul#ul-class-price li {
   margin-left: 5px;
   border: 0px;
   background-color: rgba(0, 0, 0, 0.3);
-=======
 .shoppingCartProductIcon {
   height: 30px;
   width: 30px;
@@ -963,5 +961,4 @@ ul#ul-class-price li {
   font-size: 12px;
   margin-left: 0.5%;
   margin-top: 0;
->>>>>>> staging
 }

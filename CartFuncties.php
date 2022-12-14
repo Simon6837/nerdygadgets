@@ -123,10 +123,7 @@ function checkForModification()
     }
     //if one of the above actions is done, remove the param from the url to prevent rerunning the action on a page reload
     if (isset($_GET['removeId']) || isset($_GET['deleteId'])) {
-<<<<<<< HEAD
         header('Location: ' . $_SERVER['PHP_SELF']);
-=======
         header('Location: ' . $_SERVER['HTTP_REFERER'] . $character . "showDeletedMessage=true");
->>>>>>> staging
     }
 }
