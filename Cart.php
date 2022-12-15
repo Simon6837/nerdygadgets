@@ -87,21 +87,12 @@ include_once "cartfuncties.php";
             <!-- <td colspan='5'><a href='https://www.ideal.nl/demo/en/?screens=dskweb&bank=rabo&type=dsk'>Bestellen</a></td> -->
             <td colspan="5">
                 <?php if (isset($_SESSION['loggedInUserId'])) : ?>
-<<<<<<< HEAD
-                    <form action="Order.php">
-                        <input class="button2" type="submit" value="Bestellen">
-                    </form>
-                <?php else : ?>
-                    <form action="CustomerInfo.php">
-                        <input class="button2" type="submit" value="Bestellen">
-=======
                     <form action="viewOrder.php">
                         <input class="button2" type="submit" value="Bestellen met ideal">
                     </form>
                 <?php else : ?>
                     <form action="CustomerInfo.php">
                         <input class="button2" type="submit" value="Bestellen met ideal">
->>>>>>> staging
                     </form>
                 <?php endif; ?>
             </td>

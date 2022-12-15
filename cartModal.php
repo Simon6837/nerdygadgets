@@ -80,9 +80,6 @@ include_once "cartfuncties.php";
                             <input class="button2" type="submit" value="Bestellen">
                         </form>
                     <?php endif; ?>
-                        <form action="cart.php">
-                            <input class="button2" type="submit" value="Winkelmand bekijken">
-                        </form>
                 </td>
             </tr>
         <?php } ?>

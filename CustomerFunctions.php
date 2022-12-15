@@ -19,48 +19,17 @@ IsEmployee, IsSalesperson, EmailAddress, LastEditedBy, ValidFrom, ValidTo) VALUE
 }
 
 // defines all special characters we dont want in name, address and residence and checks if inputted values contains said values
-<<<<<<< HEAD
-function specialChar ($haystack) {
-    $chars = array(
-        '!',
-        '?',
-        ':',
-        ';',
-        '"',
-        '#',
-        '@',
-        '$',
-        '%',
-        '^',
-        '*',
-        '(',
-        ')',
-        '=',
-        '+',
-        '{',
-        '}',
-        '|',
-        '>',
-        '<',
-        '~',
-        '`'
-    );
-=======
 function specialCharCheck ($haystack) {
     $chars = array(
         '!','?',':',';','"','#','@','$','%','^','*','(',')','=','+','{','}','|','>','<','~','`'
     );
 
->>>>>>> staging
     foreach ($chars as $char) {
         if (str_contains($haystack , $char)) {
             return TRUE;
         }
     }
     Return False;
-<<<<<<< HEAD
-}
-=======
 }
 
 function emailCheck ($haystack) {
@@ -81,4 +50,3 @@ function usernameCheck ($haystack) {
     $check = (2 < strlen($haystack) && strlen($haystack) <21) && str_contains($haystack, '@');
     return $check;
 };
->>>>>>> staging

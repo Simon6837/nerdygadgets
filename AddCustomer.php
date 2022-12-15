@@ -20,44 +20,6 @@ $data["melding"] = "";
 $hashedpassword = password_hash($data['WW'], PASSWORD_BCRYPT);
 $data['hWW'] = $hashedpassword;
 
-<<<<<<< HEAD
-
-// if button is pressed checks if all input values correspond with set restrictions.
-if (isset($_POST['toevoegen'])){
-    $uppercase = preg_match('@[A-Z]@', $data['WW']);
-    $lowercase = preg_match('@[a-z]@', $data['WW']);
-    $number    = preg_match('@[0-9]@', $data['WW']);
-    $specialChars = preg_match('@[^\w]@', $data['WW']);
-    $valuesCorrect = true;
-    
-    if (!(str_contains($data['E-mail'], '@') and strlen($data['E-mail'] >= 6 and str_contains((substr($data['E-mail'], -5)), '.')))) {
-        print ('e-mailadres voldoet niet <br>'); $valuesCorrect = false;
-    }
-    if ((!(2 < strlen($data['Gbrnaam']) && strlen($data['Gbrnaam']) <21) || str_contains($data['Gbrnaam'], '@'))){
-        print ('gebruikersnaam voldoet niet aan de eisen <br>');  $valuesCorrect = false;
-    }
-    if ((!$uppercase || !$lowercase || !$number || !$specialChars || strlen($data['WW'] <= 12))){
-        print ('wachtwoord voldoet niet aan de eisen <br>');  $valuesCorrect = false;
-    }
-    if (specialChar($data['naam'])){
-        print ('speciale karakters in naam zijn niet toegestaan <br>'); $valuesCorrect = false;
-    }
-    if (specialChar($data['adres'])){
-        print ('speciale karakters in adres zijn niet toegestaan <br>'); $valuesCorrect = false;
-    }
-    if (specialChar($data['woonplaats'])){
-        print ('speciale karakters in woonplaats zijn niet toegestaan <br>'); $valuesCorrect = false;
-    }
-    if (!($data['WW'] && $data['testWW'])){
-        print ('wachtwoorden komen niet overeen'); $valuesCorrect = false;
-    }
-    //checks if given values already exist within the database and sends a message when they already exist
-    if(mysqli_num_rows(mysqli_query($databaseConnection, "SELECT logonname FROM People WHERE logonname = '". $_POST['Gbrnaam']."'"))){
-        print('Deze gebruikersnaam bestaat al'); $valuesCorrect = false;
-    }
-    if(mysqli_num_rows(mysqli_query($databaseConnection, "SELECT emailaddress FROM People WHERE emailaddress = '". $_POST['E-mail']."'"))){
-        print('Deze gebruikersnaam bestaat al'); $valuesCorrect = false;
-=======
 //Checks is input meets the set requirements
 $inputError = array();
 
@@ -99,7 +61,6 @@ if (isset($_POST['toevoegen'])){
     }
     if(mysqli_num_rows(mysqli_query($databaseConnection, "SELECT emailaddress FROM People WHERE emailaddress = '". $_POST['E-mail']."'"))){
         $inputError['emailExists'] = true; $valuesCorrect = false;
->>>>>>> staging
     }
     if ($valuesCorrect) {
         //adds the given values to the database if all requirements have been met.
@@ -110,30 +71,6 @@ if (isset($_POST['toevoegen'])){
 }
 ?>
 
-<<<<<<< HEAD
-
-
-<h1>Account aanmaken</h1><br><br>
-<form method="post" action="AddCustomer.php">
-    <label>E-mailadres<label style="color: red" >*</label></label>
-    <input type="text" name="E-mail" value="<?php print($data["E-mail"]); ?>" placeholder="e-mailadres" required/>
-    <label>Gebruikersnaam</label>
-    <input type="text" name="Gbrnaam" value="<?php print($data["Gbrnaam"]); ?>" placeholder="gebruikersnaam"/>
-    <label>Wachtwoord<label style="color: red" >*</label></label>
-    <input type="password" name="WW" value="<?php print($data["WW"]); ?>" placeholder="wachtwoord" required>
-    <label>herhaal wachtwoord<label style="color: red" >*</label></label>
-    <input type="password" name="testWW" value="<?php print($data["testWW"]); ?>" placeholder="herhaal wachtwoord" required>
-    <p style="color:black;font-size:10px;">Moet bevatten: <i>Hoofdletter, kleine letter, speciaal karakter, getal</i></p>
-    <label>Naam<label style="color: red" >*</label></label>
-    <input type="text" name="naam" value="<?php print($data["naam"]); ?>" placeholder="naam" required/>
-    <label>Adres<label style="color: red" >*</label></label>
-    <input type="text" name="adres" value="<?php print($data["adres"]); ?>" placeholder="adres" required/>
-    <label>Woonplaats<label style="color: red" >*</label></label>
-    <input type="text" name="woonplaats" value="<?php print($data["woonplaats"]); ?>" placeholder="woonplaats" required/>
-    <input type="submit" name="toevoegen" value="Toevoegen" />
-</form>
-<br><?php print($data["melding"]); ?><br>
-=======
 <div class="FormBackground">
 <h1>Account aanmaken</h1><br>
 <form method="post" action="AddCustomer.php">
@@ -171,6 +108,5 @@ if (isset($_POST['toevoegen'])){
     <input class="button2 accountAanmakenTopMargin" type="submit" name="toevoegen" value="Account aanmaken" />
 </form>
 </div>
->>>>>>> staging
 </body>
 </html>
