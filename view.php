@@ -148,6 +148,31 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
             <h3>Artikel beschrijving</h3>
             <p><?php print $StockItem['SearchDetails']; ?></p>
         </div>
+
+        <div id="SimilarProducts"> <!--If item number is 1,2 or max-  
+               1, max-2, change similar items print-->
+            <h3>Vergelijkbare producten</h3>
+            <div id="SimilarProductsList" style="display:flex;">
+                    <?php ; $c=1;for ($i=-2;$i<3;$i++) {
+                        if ($i!=0) {
+                            $SimilarItem = getStockItem($_GET['id']+$i, $databaseConnection); 
+                            if (!$SimilarItem) {
+                                $SimilarItem = getStockItem($c, $databaseConnection);
+                                $StockItemImage = getStockItemImage($c, $databaseConnection);
+                                $c++;
+                            } else {
+                                $StockItemImage = getStockItemImage($_GET['id']+$i, $databaseConnection);  
+                            }?>
+                            <div id="SimilarProductsListItem" onclick="window.location.replace('view.php?id=<?php print $SimilarItem['StockItemID']; ?>')">
+                               <div id="SimilarProductsListImageBox"> <?php if ($StockItemImage){?><img id="SimilarProductsListImage" src="Public/StockItemIMG/<?php print $StockItemImage[0]['ImagePath']?>">
+                                    <?php } else {?> <img id="SimilarProductsListImage" style="height:250px !important;" src='Public/StockGroupIMG/<?php print $SimilarItem['BackupImagePath']; ?>'> <?php } ?>
+                               </div>
+                               <div id="SimiliarProductsListText"><?php print $SimilarItem['StockItemName']?></div>
+                             </div>
+                            <?php ;}
+                    }?>
+            </div>
+        </div>
         <!-- deze div kan gebruikt worden voor aanbevolen items -->
         <!-- <div id="StockItemSpecifications"></div> -->
     <?php
