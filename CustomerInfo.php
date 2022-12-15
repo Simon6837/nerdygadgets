@@ -13,7 +13,7 @@ $data["woonplaats"] = isset($_POST["woonplaats"]) ? $_POST["woonplaats"] : "";
 
 <div class="FormBackground">
     <h1>Voer hier uw gegevens in</h1><br>
-    <form action="viewOrder.php">
+    <form action="viewOrder.php" method="POST">
         <label class="inputTextFormTitleFirst">E-mailadres<label style="color: red">*</label></label>
         <input class="inputTextForm" type="text" name="E-mail" value="<?php print($data["E-mail"]); ?>" required />
         <label class="inputTextFormTitle">Naam<label style="color: red">*</label></label>
@@ -22,7 +22,7 @@ $data["woonplaats"] = isset($_POST["woonplaats"]) ? $_POST["woonplaats"] : "";
         <input class="inputTextForm" type="text" name="adres" value="<?php print($data["adres"]); ?>" required />
         <label class="inputTextFormTitle">Woonplaats<label style="color: red">*</label></label>
         <input class="inputTextForm" type="text" name="woonplaats" value="<?php print($data["woonplaats"]); ?>" required />
-        <input class="button2 accountAanmakenTopMargin" type="submit" name="toevoegen" value="Submit" />
+        <input class="button2 accountAanmakenTopMargin" type="submit" name="toevoegen" value="Verder" />
     </form>
 
     <br><label>Heeft u een account?</label>

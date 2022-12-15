@@ -47,6 +47,6 @@ function passwordCheck ($haystack) {
 };
 
 function usernameCheck ($haystack) {
-    $check = (2 < strlen($haystack) && strlen($haystack) <21) && str_contains($haystack, '@');
+    $check = (2 < strlen($haystack) && strlen($haystack) <21) && !str_contains($haystack, '@');
     return $check;
 };
