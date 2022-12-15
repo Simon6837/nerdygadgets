@@ -5,6 +5,7 @@
     --textColor: #282828;
   }
 }
+
 /* global varibles darkmode */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -12,6 +13,7 @@
     --textColor: #fff;
   }
 }
+
 :root {
   --secondaryTextColor: #ff3204;
   --secondaryBackgroundColor: #fc4848;
@@ -29,13 +31,16 @@ body {
   background-color: var(--backgroundColor) !important;
   color: var(--textColor) !important;
 }
+
 tbody tr td {
   color: var(--textColor) !important;
 }
+
 @font-face {
   font-family: MmrText;
   src: url(/Public/fonts/mmrtext.ttf);
 }
+
 .shoppingcartAmountBubble {
   background-color: var(--secondaryTextColor);
   position: fixed;
@@ -48,6 +53,7 @@ tbody tr td {
   text-align: center;
   z-index: 70;
 }
+
 .notificationBox {
   position: fixed;
   bottom: 0;
@@ -61,17 +67,20 @@ tbody tr td {
   padding-top: 0px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 }
+
 .notificationTitle {
   color: var(--textColor);
   font-family: MmrText;
   font-size: 1.5em;
   text-align: center;
 }
+
 .notificationText {
   color: var(--textColor);
   font-family: MmrText;
   font-size: 1.2em;
 }
+
 #cartModal {
   position: fixed;
   right: 13px;
@@ -80,6 +89,7 @@ tbody tr td {
   max-height: 80vh;
   overflow-y: scroll;
 }
+
 #cartModal table {
   background-color: var(--backgroundColor);
   margin: 0 auto;
@@ -88,13 +98,16 @@ tbody tr td {
   margin: 20px;
   color: var(--textColor);
 }
+
 #cartModal a {
   text-decoration: none;
   color: var(--secondaryTextColor);
 }
+
 .cartName {
   color: var(--textColor) !important;
 }
+
 #cartModal a:hover {
   color: var(mainColor);
 }
@@ -111,6 +124,7 @@ a:hover {
 td {
   color: var(--textColor);
 }
+
 select {
   margin: 50px;
   width: 100%;
@@ -123,6 +137,7 @@ select {
   appearance: none;
   background: url(../Img/mouse-hover-icon-22.jpg) 96% / 30px no-repeat #eee;
 }
+
 .shopFurther {
   text-align: center;
   margin-top: 15px;
@@ -133,6 +148,7 @@ select {
 .shopFurther a:hover {
   color: var(--secondaryTextColor);
 }
+
 .shoppingCartTable a {
   text-decoration: none;
   color: var(--secondaryTextColor);
@@ -141,6 +157,7 @@ select {
 .shoppingCartTable a:hover {
   color: var(mainColor);
 }
+
 a {
   text-decoration: none;
   position: relative;
@@ -200,10 +217,12 @@ ul#ul-class-navigation li {
   text-decoration-color: currentcolor;
   margin-right: 5px;
 }
+
 ul#ul-class-navigation li :hover {
   scale: 1.2;
   transition: 1sec;
 }
+
 #Header {
   position: fixed;
   top: 0;
@@ -213,9 +232,11 @@ ul#ul-class-navigation li :hover {
   z-index: 1;
   border-bottom: 1px solid var(--secondaryTextColor);
 }
+
 .red {
   color: var(--secondaryTextColor) !important;
 }
+
 #Content {
   margin-top: 200px;
 }
@@ -350,9 +371,11 @@ ul#ul-class-navigation li :hover {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+
 .CenterPriceLeftChild a {
   color: var(--secondaryTextColor);
 }
+
 .CenterPriceLeftChild a:hover {
   color: var(--secondaryTextColor);
 }
@@ -634,6 +657,7 @@ ul#ul-class-price li {
   font-size: 30px;
   color: var(--secondaryBackgroundColor) !important;
 }
+
 .carousel-control-prev {
   transform: rotate(180deg);
 }
@@ -749,17 +773,21 @@ ul#ul-class-price li {
 .hide {
   display: none !important;
 }
+
 #button,
 #button2 {
   cursor: default;
 }
+
 .carousel-indicators li,
 .carousel-indicators .active {
   background-color: var(--secondaryBackgroundColor) !important;
 }
+
 #search_string {
   background-color: rgb(255, 255, 255);
 }
+
 .InclBtw {
   color: var(--textColor);
 }
@@ -793,9 +821,11 @@ ul#ul-class-price li {
   transition: background-color 0.1;
   text-align: center;
 }
+
 .addProduct:hover {
   background-color: var(--mainHoverColor);
 }
+
 .AmountInput {
   width: 75px;
   margin-left: 10px;
@@ -807,6 +837,7 @@ ul#ul-class-price li {
   color: var(--textColor);
   border-radius: 10px;
 }
+
 .AmountInput:hover {
   background-color: var(--mainHoverColor);
 }
@@ -837,6 +868,52 @@ ul#ul-class-price li {
   max-width: 100px;
   margin-right: 10px;
 }
+
 .idealImage {
   height: 75px;
+}
+
+#SimilarProducts {
+  color: var(--textColor);
+  width: 100%;
+  height:300px;
+  float: left;
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: 0;
+  font-family: pt-sans, sans-serif;
+  font-size: 20px;
+  list-style: none;
+}
+
+#SimilarProductsListItem {
+  width: 250px;
+  height: 260px;
+  border-radius: 15px;
+  margin-right: 5em;
+  margin: auto;
+}
+
+#SimilarProductsListImageBox {
+  height:250px !important;
+  width: inherit;
+  position: relative;
+}
+
+#SimilarProductsListImage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  margin: auto;
+  padding: 10px;
+  border-radius: 30px;
+}
+
+#SimiliarProductsListText {
+  color: var(--textColor);
+  margin:auto;
+  padding:10px;
+  text-align: center;
 }
