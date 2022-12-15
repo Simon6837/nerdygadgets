@@ -917,3 +917,56 @@ ul#ul-class-price li {
   padding:10px;
   text-align: center;
 }
+
+.forceA {
+  text-decoration: none !important;
+  color: var(--secondaryTextColor) !important;
+}
+
+.FormBackground {
+  margin: auto;
+  margin-top: 2%;
+  padding: 1%;
+  width: 40%;
+  text-align: left;
+  border-radius: 15px;
+  box-shadow: 0 10px 16px 0 rgb(0 0 0 / 40%), 0 6px 20px 0 rgb(0 0 0 / 40%) !important;
+}
+
+.inputTextForm {
+  color: var(--textColor);
+  margin-top: 0;
+  margin-bottom: 0;
+  border-radius: 15px;
+  background-color: var(--backgroundColor);
+}
+
+.inputTextFormTitle {
+  margin-top: 5%;
+  margin-left: 0.5%;
+  color: var(--textColor);
+}
+
+.inputTextFormTitleFirst {
+  margin-top: 0 !important;
+  margin-left: 0.5%;
+  color: var(--textColor);
+}
+
+.smallTextDesc {
+  font-size: 12px;
+  color: var(--textColor);
+  margin-left: 0.5%;
+  margin-bottom: 0;
+}
+
+.accountAanmakenTopMargin {
+  margin-top: 5% !important;
+}
+
+.inputError {
+  color: var(--secondaryTextColor) !important;
+  font-size: 12px;
+  margin-left: 0.5%;
+  margin-top: 0;
+}

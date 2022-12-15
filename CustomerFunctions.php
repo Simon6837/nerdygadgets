@@ -19,31 +19,11 @@ IsEmployee, IsSalesperson, EmailAddress, LastEditedBy, ValidFrom, ValidTo) VALUE
 }
 
 // defines all special characters we dont want in name, address and residence and checks if inputted values contains said values
-function specialChar ($haystack) {
+function specialCharCheck ($haystack) {
     $chars = array(
-        '!',
-        '?',
-        ':',
-        ';',
-        '"',
-        '#',
-        '@',
-        '$',
-        '%',
-        '^',
-        '*',
-        '(',
-        ')',
-        '=',
-        '+',
-        '{',
-        '}',
-        '|',
-        '>',
-        '<',
-        '~',
-        '`'
+        '!','?',':',';','"','#','@','$','%','^','*','(',')','=','+','{','}','|','>','<','~','`'
     );
+
     foreach ($chars as $char) {
         if (str_contains($haystack , $char)) {
             return TRUE;
@@ -51,3 +31,22 @@ function specialChar ($haystack) {
     }
     Return False;
 }
+
+function emailCheck ($haystack) {
+    $check = str_contains($haystack, '@') and strlen($haystack >= 6 and str_contains((substr($haystack, -5)), '.'));
+    return $check;
+};
+
+function passwordCheck ($haystack) {
+    $uppercase = preg_match('@[A-Z]@', $haystack);
+    $lowercase = preg_match('@[a-z]@', $haystack);
+    $number    = preg_match('@[0-9]@', $haystack);
+    $specialChars = preg_match('@[^\w]@', $haystack);
+    $check = $uppercase && $lowercase && $number && $specialChars && strlen($haystack >= 12);
+    return $check;
+};
+
+function usernameCheck ($haystack) {
+    $check = (2 < strlen($haystack) && strlen($haystack) <21) && str_contains($haystack, '@');
+    return $check;
+};
