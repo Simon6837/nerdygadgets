@@ -108,6 +108,11 @@ function checkForModification()
     }
     //set the amount of an item when the user changed the amount in the input field
     if (isset($_GET['setAmountId'])) {
+        if ($_GET['amount'] <= 0) {
+            deleteProductFromCart($_GET['setAmountId']);
+            header('Location: ' . $_SERVER['HTTP_REFERER'] . $character . "showDeletedMessage=true");
+            exit;
+        }
         setProductAmount($_GET['setAmountId'], $_GET['amount']);
         header("Location: " . $_SERVER['HTTP_REFERER'] . $character . "showAmountChangedMessage=true");
     }

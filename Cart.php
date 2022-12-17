@@ -23,6 +23,7 @@ include_once "cartfuncties.php";
         //if the cart is empty show it. and prevent running the rest of the code
         if (empty($cart)) {
             echo "<tr style='text-align: center'><td colspan='5'>Uw winkelwagen is leeg</td></tr>";
+            include __DIR__ . "/footer.php";
             return;
         }
         ?>
@@ -49,7 +50,7 @@ include_once "cartfuncties.php";
                 <td><img onclick="window.location.replace('view.php?id=<?php print $key ?>')" style='width: 100px; cursor: pointer;' src='<?php print $imagepath; ?>'></td>
                 <td><a class="cartName" href='view.php?id=<?php print $key ?>'><?php print $StockItem['StockItemName'] ?></a> <br> <a href='cart.php?deleteId=<?php print $key ?>'>Verwijder</a></td>
                 <!-- change the product amount -->
-                <td style="text-align:center;" class="itemCartCount"><input class="AmountInput" id="setProductAmount<?php print $key?>" type="number" min="1" value="<?php print $item ?>"></td>
+                <td style="text-align:center;" class="itemCartCount"><input class="AmountInput" id="setProductAmount<?php print $key?>" type="number" value="<?php print $item ?>"></td>
                 <script>
                     //add an event listener to the input field that changes the amount of the product when the value changes
                     document.getElementById("setProductAmount<?php print $key?>").addEventListener("change", function() {
