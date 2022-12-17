@@ -23,6 +23,7 @@ include_once "cartfuncties.php";
         //if the cart is empty show it. and prevent running the rest of the code
         if (empty($cart)) {
             echo "<tr style='text-align: center'><td colspan='5'>Uw winkelwagen is leeg</td></tr>";
+            include __DIR__ . "/footer.php";
             return;
         }
         ?>

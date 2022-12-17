@@ -20,7 +20,7 @@ if (isset($_GET['showDeletedMessage'])) {
 ?>
     <div class="notificationBox">
         <div class="notificationTitle">Gelukt!</div>
-        <div class="notificationText"><?php print $StockItem['StockItemName'] . ' is verwijderd uit de winkelmand' ?></div>
+        <div class="notificationText">Het product is uit uw winkelmand verwijderd</div>
     </div>
 <?php
 }
