@@ -1,6 +1,5 @@
-<!-- dit bestand bevat alle code voor de pagina die één product laat zien -->
 <?php
-include __DIR__ . "/header.php";
+include_once __DIR__ . "/header.php";
 
 include_once "cartfuncties.php";
 function getVoorraadTekst($actueleVoorraad)
@@ -14,6 +13,7 @@ function getVoorraadTekst($actueleVoorraad)
 $StockItem = getStockItem($_GET['id'], $databaseConnection);
 $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 ?>
+<!-- dit bestand bevat alle code voor de pagina die één product laat zien -->
 <script>
     // get product temperature by sending a request to the temperature API
     async function getTemperature() {

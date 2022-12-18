@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . "/header.php";
+include_once __DIR__ . "/header.php";
 include_once "cartfuncties.php";
 ?>
 <!DOCTYPE html>
@@ -14,16 +14,16 @@ include_once "cartfuncties.php";
 
 <body>
     <?php
-    if (!empty($_POST)) {
-        $_SESSION["emailaddress"] = $_POST["E-mail"];
-        $_SESSION["fullname"] = $_POST["naam"];
-        $_SESSION["address"] = $_POST["adres"];
-        $_SESSION["residence"] = $_POST["woonplaats"];
+    if (!empty($_SESSION['postInfo'])) {
+        $_SESSION["emailaddress"] = $_SESSION['postInfo']["E-mail"];
+        $_SESSION["fullname"] = $_SESSION['postInfo']["naam"];
+        $_SESSION["address"] = $_SESSION['postInfo']["adres"];
+        $_SESSION["residence"] = $_SESSION['postInfo']["woonplaats"];
     }
     $cart = getCart();
     ?>
     <h1>Bestelling</h1>
-    <div class="order-main">
+    <div class="order-main"/>
         <!-- cart -->
         <div class="order-cart-container">
             <?php

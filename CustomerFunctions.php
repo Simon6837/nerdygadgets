@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . "/header.php";
+include_once __DIR__ . "/header.php";
 include "DatabaseFunctions.php";
 
 // adds inputted values into the people table in the database
@@ -18,23 +18,26 @@ IsEmployee, IsSalesperson, EmailAddress, LastEditedBy, ValidFrom, ValidTo) VALUE
     return $result;
 }
 
-// defines all special characters we dont want in name, address and residence and checks if inputted values contains said values
+// defines all special characters we don't want in name, address and residence and checks if inputted values contains said values
 function specialCharCheck ($haystack) {
     $chars = array(
-        '!','?',':',';','"','#','@','$','%','^','*','(',')','=','+','{','}','|','>','<','~','`'
-    );
+        '!','?',':',';','"','#','@','$','%','^','*','(',')','=','+','{','}','|','>','<','~','`');
 
     foreach ($chars as $char) {
         if (str_contains($haystack , $char)) {
             return TRUE;
         }
     }
-    Return False;
+    return false;
 }
 
 function emailCheck ($haystack) {
-    $check = str_contains($haystack, '@') and strlen($haystack >= 6 and str_contains((substr($haystack, -5)), '.'));
-    return $check;
+    if (str_contains($haystack, '@') and strlen($haystack >= 6 and str_contains((substr($haystack, -5)), '.'))){
+        return true;
+    }
+    else {
+        return false;
+    }
 };
 
 function passwordCheck ($haystack) {
@@ -50,3 +53,23 @@ function usernameCheck ($haystack) {
     $check = (2 < strlen($haystack) && strlen($haystack) <21) && str_contains($haystack, '@');
     return $check;
 };
+
+function PostalCodeCheck ($haystack){
+    $check1 = is_numeric(substr($haystack, 0, -2));
+    $check2 = ctype_alpha(substr($haystack, 4));
+    if ($check1 && $check2){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+function HuisnummerCheck ($haystack){
+    $check = is_numeric($haystack);
+    return $check;
+}
+
+function ToevoegingCheck ($haystack){
+    return ctype_alpha($haystack);
+}

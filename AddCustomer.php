@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"><title>Inloggen</title></head>
-<body>
 <?php
-include 'CustomerFunctions.php';
+include_once 'CustomerFunctions.php';
 $databaseConnection = connectToDatabase();
 
 //checks if values are set and if they aren't, it  sets them to empty
@@ -66,11 +62,16 @@ if (isset($_POST['toevoegen'])){
         //adds the given values to the database if all requirements have been met.
         $data["melding"] = klantGegevensToevoegen($data) ? 'Account is succesvol aangemaakt!' : 'Account is niet aangemaakt!';
         sleep(2);
-        header('location: http://localhost/nerdygadgets/login.php');
+        $script = "<script>window.location = './Login.php';</script>";
+        echo $script;
     }
 }
 ?>
 
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Inloggen</title></head>
+<body>
 <div class="FormBackground">
 <h1>Account aanmaken</h1><br>
 <form method="post" action="AddCustomer.php">
