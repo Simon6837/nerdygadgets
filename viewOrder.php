@@ -19,6 +19,9 @@ include_once "cartfuncties.php";
         $_SESSION["fullname"] = $_SESSION['postInfo']["naam"];
         $_SESSION["address"] = $_SESSION['postInfo']["adres"];
         $_SESSION["residence"] = $_SESSION['postInfo']["woonplaats"];
+        $_SESSION["housenumber"] = $_SESSION['postInfo']["huisnummer"];
+        $_SESSION["addition"] = $_SESSION['postInfo']["huisnummerT"];
+        $_SESSION["ZIPcode"] = $_SESSION['postInfo']["postcode"];
     }
     $cart = getCart();
     ?>
@@ -54,8 +57,20 @@ include_once "cartfuncties.php";
                         <td><?php echo $_SESSION["fullname"]; ?></td>
                     </tr>
                     <tr>
+                        <td>Postcode:</td>
+                        <td><?php echo $_SESSION["ZIPcode"] ; ?> </td>
+                    </tr>
+                    <tr>
                         <td>Adres:</td>
                         <td><?php echo $_SESSION["address"] ; ?> </td>
+                    </tr>
+                    <tr>
+                        <td>Huisnummer:</td>
+                        <td><?php echo $_SESSION["housenumber"] ; ?> </td>
+                    </tr>
+                    <tr>
+                        <td>Toevoeging:</td>
+                        <td><?php echo $_SESSION["addition"] ; ?> </td>
                     </tr>
                     <tr>
                         <td>Email:</td>

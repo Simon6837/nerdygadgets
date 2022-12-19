@@ -12,7 +12,7 @@ $data["huisnummerT"] = $_POST["huisnummerT"] ?? "";
 
 $inputError = array();
 
-
+$_SESSION['postInfo'] = $_POST;
 
 if (isset($_POST['submit'])){
     $valuesCorrect = true;
