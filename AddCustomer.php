@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"><title>Inloggen</title></head>
-<body>
 <?php
-include 'CustomerFunctions.php';
+include_once 'CustomerFunctions.php';
 $databaseConnection = connectToDatabase();
 
 //checks if values are set and if they aren't, it  sets them to empty
@@ -15,6 +11,9 @@ $data["testWW"] = isset($_POST["testWW"]) ? $_POST["testWW"] : "";
 $data["naam"] = isset($_POST["naam"]) ? $_POST["naam"] : "";
 $data["adres"] = isset($_POST["adres"]) ? $_POST["adres"] : "";
 $data["woonplaats"] = isset($_POST["woonplaats"]) ? $_POST["woonplaats"] : "";
+$data["huisnummer"] = $_POST["huisnummer"] ?? "";
+$data["postcode"] = $_POST["postcode"] ?? "";
+$data["huisnummerT"] = $_POST["huisnummerT"] ?? "";
 $data["melding"] = "";
 //hashes password and saves it in array
 $hashedpassword = password_hash($data['WW'], PASSWORD_BCRYPT);
@@ -55,6 +54,20 @@ if (isset($_POST['toevoegen'])){
         $valuesCorrect = false;
         $inputError['herhaalwachtwoord'] = true;
     }
+    if (!PostalCodeCheck($data['postcode'])){
+        $valuesCorrect = false;
+        $inputError['postcode'] = true;
+    }
+    if (!HuisnummerCheck($data['huisnummer'])) {
+        $valuesCorrect = false;
+        $inputError['huisnummer'] = true;
+    }
+    if (!empty($data['huisnummerT'])) {
+        if (!ToevoegingCheck($data['huisnummerT'])) {
+            $valuesCorrect = false;
+            $inputError['huisnummerT'] = true;
+        }
+    }
     //checks if given values already exist within the database and sends a message when they already exist
     if(mysqli_num_rows(mysqli_query($databaseConnection, "SELECT logonname FROM People WHERE logonname = '". $_POST['Gbrnaam']."'"))){
         $inputError['gebruikersnaamExists'] = true; $valuesCorrect = false;
@@ -66,11 +79,16 @@ if (isset($_POST['toevoegen'])){
         //adds the given values to the database if all requirements have been met.
         $data["melding"] = klantGegevensToevoegen($data) ? 'Account is succesvol aangemaakt!' : 'Account is niet aangemaakt!';
         sleep(2);
-        header('location: http://localhost/nerdygadgets/login.php');
+        $script = "<script>window.location = './Login.php';</script>";
+        echo $script;
     }
 }
 ?>
 
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Inloggen</title></head>
+<body>
 <div class="FormBackground">
 <h1>Account aanmaken</h1><br>
 <form method="post" action="AddCustomer.php">
@@ -101,10 +119,22 @@ if (isset($_POST['toevoegen'])){
     <label class="inputTextFormTitle">Adres<label style="color: red" >*</label></label>
     <input class="inputTextForm" type="text" name="adres" value="<?php print($data["adres"]); ?>" placeholder="adres" required/>
     <?php if (isset($inputError['adres'])) { print ("<label class='inputError'><i>Speciale karakters in adres zijn niet toegestaan</i></label><br>");}?>
-    
+
+    <label class="inputTextFormTitle">Huisnummer<label style="color: red">*</label></label>
+    <input class="inputTextForm" type="number" name="huisnummer" value="<?php print($data["huisnummer"]); ?>" placeholder="huisnummer" required />
+    <?php if (isset($inputError['huisnummer'])) { print ("<label class='inputError'><i>Speciale karakters en letters in huisnummer zijn niet toegestaan</i></label><br>");}?>
+
+    <label class="inputTextFormTitle">Toevoeging</label>
+    <input class="inputTextForm" type="text" name="huisnummerT" value="<?php print($data["huisnummerT"]); ?>" placeholder="toevoeging"/>
+    <?php if (isset($inputError['huisnummerT'])) { print ("<label class='inputError'><i>Een toevoeging bestaat uit letters</i></label><br>");}?>
+
     <label class="inputTextFormTitle">Woonplaats<label style="color: red" >*</label></label>
     <input class="inputTextForm" type="text" name="woonplaats" value="<?php print($data["woonplaats"]); ?>" placeholder="woonplaats" required/>
     <?php if (isset($inputError['woonplaats'])) { print ("<label class='inputError'><i>Speciale karakters in woonplaats zijn niet toegestaan</i></label><br>");}?>
+
+    <label class="inputTextFormTitle">Postcode<label style="color: red">*</label></label>
+    <input class="inputTextForm" type="text" name="postcode" value="<?php print($data["postcode"]); ?>" placeholder="postcode" required />
+    <?php if (isset($inputError['postcode'])) { print ("<label class='inputError'><i>Postcode voldoet niet aan de standaard vorm</i></label><br>");}?>
     <input class="button2 accountAanmakenTopMargin" type="submit" name="toevoegen" value="Account aanmaken" />
 </form>
 </div>
