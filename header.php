@@ -61,7 +61,17 @@ $databaseConnection = connectToDatabase();
                     <a href="cart.php" class="HrefDecoration"><i class="fas fa-shopping-cart red"></i></a>
                     </li>
                     <li>
-                        <a href="edit.php" class="HrefDecoration"><i class="fas fa-user red"></i></a>
+                        <?php
+                        if(isset($_SESSION['loggedInUserId'])) {
+                            
+                            print($_SESSION['loggedInUserId']);?>
+                            <a href="edit.php" class="HrefDecoration"><i class="fas fa-user red"></i></a><?php
+                        }
+                        else {
+                            ?><a href="login.php" class="HrefDecoration"><i class="fas fa-user red"></i></a><?php
+                        }
+                        ?>
+                        
                     </li>
                 </ul>
                 <script>

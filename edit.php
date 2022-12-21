@@ -2,7 +2,6 @@
 include __DIR__ . "/header.php";
 $databaseConnection = connectToDatabase();
 //HAAL DIT WEG ALS DE LOGIN KLAAR IS
-$_SESSION['loggedInUserId'] = 6;
 if (isset($_SESSION['loggedInUserId'])) {
     $nameDatabase = mysqli_prepare($databaseConnection, "SELECT fullname, logonname, preferredname FROM people WHERE personid = " . $_SESSION['loggedInUserId'] . "");
     mysqli_stmt_execute($nameDatabase);
@@ -30,6 +29,7 @@ if (isset($_SESSION['loggedInUserId'])) {
 </head>
 
 <body>
+    <form method="post" action="Logout.php">
     <table class="editContainer">
         <tr>
             <td>
@@ -51,9 +51,13 @@ if (isset($_SESSION['loggedInUserId'])) {
             </div>
         </tr>
         <tr>
-            <h1>Adresgegevens</h1>
+            <td><h1>Adresgegevens</h1></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="uitloggen"> </td>
         </tr>
     </table>
+    </form>
 </body>
 
 </html>
