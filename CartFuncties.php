@@ -37,13 +37,18 @@ function saveCart($cart)
  * if the product does not exist in the cart, add it
  * @param int $stockItemID the id of the product to add to the cart
  * @param int $amount the amount of the product to add to the cart
- * @return void
+ * @return bool true if the product was added to the cart, false if the amount was invalid
  */
 function addProductToCart($stockItemID, $amount)
 {
-    $cart = getCart();
-    $cart[$stockItemID] = array_key_exists($stockItemID, $cart) ? $cart[$stockItemID] + $amount : $amount;
-    saveCart($cart);
+    if (!is_numeric($amount) || $amount < 1) {
+        return false;
+    } else {
+        $cart = getCart();
+        $cart[$stockItemID] = array_key_exists($stockItemID, $cart) ? $cart[$stockItemID] + $amount : $amount;
+        saveCart($cart);
+        return true;
+    }
 }
 
 /**
@@ -102,9 +107,15 @@ function checkForModification()
     $character = str_contains($_SERVER['HTTP_REFERER'], '?') ? '&' : '?';
     //add an item when the user clicked the + icon
     if (isset($_GET['addId'])) {
-        addProductToCart($_GET['addId'], isset($_GET['amount']) ? $_GET['amount'] : 1);
-        // send the user back to view.php with the stockItemID as id
-        header("Location: " . $_SERVER['HTTP_REFERER'] . $character . "showAddedMessage=true");
+        $success = addProductToCart($_GET['addId'], isset($_GET['amount']) ? $_GET['amount'] : 1);
+        //if the amount was invalid, send the user back to the page with an error message
+        //else send the user back to the page with a success message
+        if (!$success) {
+            header("Location: " . $_SERVER['HTTP_REFERER'] . $character . "showErrorMessage=true");
+        } else {
+            // send the user back to view.php with the stockItemID as id
+            header("Location: " . $_SERVER['HTTP_REFERER'] . $character . "showAddedMessage=true");
+        }
     }
     //set the amount of an item when the user changed the amount in the input field
     if (isset($_GET['setAmountId'])) {
