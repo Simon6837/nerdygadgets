@@ -872,6 +872,51 @@ ul#ul-class-price li {
   height: 75px;
 }
 
+#SimilarProducts {
+  color: var(--textColor);
+  width: 100%;
+  height:300px;
+  float: left;
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: 0;
+  font-family: pt-sans, sans-serif;
+  font-size: 20px;
+  list-style: none;
+}
+
+#SimilarProductsListItem {
+  width: 250px;
+  height: 260px;
+  border-radius: 15px;
+  margin-right: 5em;
+  margin: auto;
+}
+
+#SimilarProductsListImageBox {
+  height:250px !important;
+  width: inherit;
+  position: relative;
+}
+
+#SimilarProductsListImage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  margin: auto;
+  padding: 10px;
+  border-radius: 30px;
+}
+
+#SimiliarProductsListText {
+  color: var(--textColor);
+  margin:auto;
+  padding:10px;
+  text-align: center;
+}
+
 .forceA {
   text-decoration: none !important;
   color: var(--secondaryTextColor) !important;
