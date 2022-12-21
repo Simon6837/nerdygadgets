@@ -16,51 +16,49 @@ $dateT = date('Y-m-d H:i:s');
 //connects to database
 $databaseConnection = connectToDatabase();
 
-// inserts values from the order to the orders table
+// insert values into the orders table
 $insertOrder = mysqli_prepare($databaseConnection, "INSERT INTO Orders (CustomerID, SalespersonPersonID
 , PickedByPersonID, ContactPersonID, BackorderOrderID, CustomerPurchaseOrderNumber
 , IsUndersupplyBackordered, LastEditedBy, OrderDate, ExpectedDeliveryDate, PickingCompletedWhen
 , LastEditedWhen, comments) VALUES (1, 1, 1, 1, 1, 1, 1, 1, ?, ?, ?, ?, 'hallo')");
 
-// gives the values for the ?'s in the query
+// bind values to the prepared statement and execute the query
 mysqli_stmt_bind_param($insertOrder, 'ssss', $date, $dateW, $dateT, $dateT);
-
-// executes the query with the given values
 mysqli_stmt_execute($insertOrder);
 
-// Gets last auto-increment from last query
+// get the last auto-increment value from the previous query
 $lastOrder = mysqli_insert_id($databaseConnection);
 
-//closes connection with the database
-mysqli_close($databaseConnection);
-
-// gets item from cart
-$cart = getCart();
-
-$databaseConnection = connectToDatabase();
-
-// Loops through every item in the cart
+// loop through each item in the cart
 foreach ($cart as $ID => $quantity) {
-    // gets the stockitem
+    // get the stock item
     $stockItem = getStockItem($ID, $databaseConnection);
 
-    //Gets the price of the corresponding item
+    // get the price of the item
     $price = $stockItem['SellPrice'];
 
-    //LastEditedBy column is dummyvalue, we don't have personID's yet
-    // inserts item information for all items in the cart to the orderlines table
+    // insert item information into the orderlines table
     $InsertLine = mysqli_query($databaseConnection, "INSERT INTO orderlines (OrderID, StockItemID, Description,
     PackageTypeID, Quantity, UnitPrice, TaxRate, PickedQuantity, PickingCompletedWhen, LastEditedBy, LastEditedWhen) 
     VALUES ($lastOrder, $ID, 'order made on nerdygadgets.nl', 1, $quantity, $price, 15.000, $quantity, '$dateT', 1, '$dateT')");
     
-    // Updates storage by detracting the quantity of the purchased item from the current storage quantity
+    // update the stock item holdings by decreasing the quantity on hand
    $updateStockItemHoldings = mysqli_query($databaseConnection, "UPDATE stockitemholdings SET quantityonhand = (quantityonhand - $quantity) WHERE stockitemid = $ID");
 }
 
+// if all queries were successful, commit the transaction
+if ($insertOrder && $InsertLine && $updateStockItemHoldings) {
+    mysqli_query($databaseConnection, "COMMIT");
+} else {
+    // if any of the queries failed, roll back the transaction
+    mysqli_query($databaseConnection, "ROLLBACK");
+}
+
+// close the database connection
 mysqli_close($databaseConnection);
 
-//remove all items from cart
+// clear the cart
 clearCart();
 
-// Opens the Ideal demo page when executed
+// redirect to the Ideal demo page
 header('location: https://www.ideal.nl/demo/en/?screens=dskweb&bank=rabo&type=dsk;');
