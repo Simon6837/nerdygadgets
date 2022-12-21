@@ -850,8 +850,7 @@ ul#ul-class-price li {
 
 .order-cart-container {
   width: 45%;
-  border: 1px solid gray;
-  border-radius: 5px;
+  margin-left: 45px;
 }
 
 .order-cart-item {

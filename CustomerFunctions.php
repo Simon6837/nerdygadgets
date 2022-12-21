@@ -8,11 +8,11 @@ function klantGegevensToevoegen($customerData){
     $dateT = date('Y-m-d H:i:s');
     $insertCustomer = mysqli_prepare($databaseConnection, "INSERT INTO people (FullName, PreferredName,
 SearchName, address, residence, IsPermittedToLogon, LogonName, IsExternalLogonProvider, HashedPassword, IsSystemUser,
-IsEmployee, IsSalesperson, EmailAddress, LastEditedBy, ValidFrom, ValidTo) VALUES (?, ?, ?, ?, ?, 1, ?, 0, ?, 1, 0, 0, ?, 1, ?, ?)");
+IsEmployee, IsSalesperson, EmailAddress, LastEditedBy, ValidFrom, ValidTo, Housenumber, ZIP_code, addition) VALUES (?, ?, ?, ?, ?, 1, ?, 0, ?, 1, 0, 0, ?, 1, ?, ?, ?, ?,?)");
 
-    mysqli_stmt_bind_param($insertCustomer, 'ssssssssss', $customerData['naam'], $customerData['naam'],
+    mysqli_stmt_bind_param($insertCustomer, 'ssssssssssiss', $customerData['naam'], $customerData['naam'],
         $customerData['naam'], $customerData['adres'], $customerData['woonplaats'], $customerData['Gbrnaam'],
-        $customerData['hWW'], $customerData['E-mail'], $dateT, $dateT);
+        $customerData['hWW'], $customerData['E-mail'], $dateT, $dateT, $customerData['huisnummer'], $customerData['postcode'], $customerData['huisnummerT']);
     $result = mysqli_stmt_execute($insertCustomer);
     mysqli_close($databaseConnection);
     return $result;

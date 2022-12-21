@@ -24,7 +24,7 @@ $databaseConnection = connectToDatabase();
             $id = 'logonname';
         }
         // selects the password and personid from the corresponding username or email
-        $passworddatabase = mysqli_prepare($databaseConnection, "SELECT logonname, fullname, address, residence, emailaddress, hashedpassword, personid FROM people WHERE $id = ?");
+        $passworddatabase = mysqli_prepare($databaseConnection, "SELECT logonname, fullname, address, residence, emailaddress, hashedpassword, personid, housenumber, ZIP_code, addition FROM people WHERE $id = ?");
         mysqli_stmt_bind_param($passworddatabase, 's', $_POST['Gbrnaam']);
         mysqli_stmt_execute($passworddatabase);
         // returns the results from the query as a string
@@ -38,12 +38,15 @@ $databaseConnection = connectToDatabase();
             $passcheck = password_verify($_POST['WW'], $userDetails['hashedpassword']);
             // if password is correct saves login info in session and returns user to cart
             if ($passcheck) {
-                $_SESSION['loggedInUserId'] = $userDetails['personid'];
-                $_SESSION['logonname'] = $userDetails['logonname'];
-                $_SESSION['fullname'] = $userDetails['fullname'];
-                $_SESSION['address'] = $userDetails['address'];
-                $_SESSION['residence'] = $userDetails['residence'];
-                $_SESSION['emailaddress'] = $userDetails['emailaddress'];
+                $_SESSION['userdata']['loggedInUserId'] = $userDetails['personid'];
+                $_SESSION['userdata']['logonname'] = $userDetails['logonname'];
+                $_SESSION['userdata']['fullname'] = $userDetails['fullname'];
+                $_SESSION['userdata']['address'] = $userDetails['address'];
+                $_SESSION['userdata']['residence'] = $userDetails['residence'];
+                $_SESSION['userdata']['emailaddress'] = $userDetails['emailaddress'];
+                $_SESSION['userdata']['housenumber'] = $userDetails['housenumber'];
+                $_SESSION['userdata']['ZIP_code'] = $userDetails['ZIP_code'];
+                $_SESSION['userdata']['addition'] = $userDetails['addition'];
 
                 $script = "<script>window.location = './viewOrder.php';</script>";
                 echo $script;
