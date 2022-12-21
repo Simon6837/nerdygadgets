@@ -8,6 +8,14 @@ if (isset($_GET['showAddedMessage'])) {
     </div>
 <?php
 }
+if (isset($_GET['showErrorMessage'])) {
+?>
+    <div class="notificationBox" style="background-color: red;">
+        <div class="notificationTitle">Error!</div>
+        <div class="notificationText">Er is iets fout gegaan</div>
+    </div>
+<?php
+}
 if (isset($_GET['showAmountChangedMessage'])) {
 ?>
     <div class="notificationBox">
@@ -38,6 +46,8 @@ if (isset($_GET['showDeletedMessage'])) {
     url = url.replace('?showDeletedMessage', '');
     url = url.replace('&showAmountChangedMessage', '');
     url = url.replace('?showAmountChangedMessage', '');
+    url = url.replace('&showErrorMessage', '');
+    url = url.replace('?showErrorMessage', '');
     url = url.replace('=true', '');
     //replace the url without the get parameters but don't reload the page
     window.history.replaceState({}, 'document.title', url);

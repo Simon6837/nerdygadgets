@@ -132,7 +132,7 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                                 //check if the amount is higher than the stock
                                 if ((amount + stockInCart) > <?php echo substr($StockItem['QuantityOnHand'], 10) ?>) {
                                     //if the amount is higher than the stock, ask the user if he wants to still add the product to the cart
-                                    if (!confirm("Er is niet genoeg voorraad, wilt u het product toch toevoegen aan de winkelwagen?")) {
+                                    if (!confirm("Er is niet genoeg voorraad, wilt u het product toch toevoegen aan de winkelwagen?\nDit kan leiden tot vertraging in de levering.")) {
                                         return;
                                     }
                                 }
