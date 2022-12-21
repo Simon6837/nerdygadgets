@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . "/header.php";
+include_once __DIR__ . "/header.php";
 include_once "cartfuncties.php";
 ?>
 <!DOCTYPE html>
@@ -87,7 +87,7 @@ include_once "cartfuncties.php";
         <tr style='text-align: right;'>
             <!-- <td colspan='5'><a href='https://www.ideal.nl/demo/en/?screens=dskweb&bank=rabo&type=dsk'>Bestellen</a></td> -->
             <td colspan="5">
-                <?php if (isset($_SESSION['loggedInUserId'])) : ?>
+                <?php if (isset($_SESSION['userdata']['loggedInUserId'])) : ?>
                     <form action="viewOrder.php">
                         <input class="button2" type="submit" value="Bestellen met ideal">
                     </form>

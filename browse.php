@@ -1,6 +1,5 @@
-    <!-- dit bestand bevat alle code voor het productoverzicht -->
-    <?php
-    include __DIR__ . "/header.php";
+<?php
+include_once __DIR__ . "/header.php";
 
     $ReturnableResult = null;
     $Sort = "SellPrice";
@@ -193,7 +192,7 @@
         return $btw * $adviesPrijs / 100 + $adviesPrijs;
     }
     ?>
-
+    <!-- dit bestand bevat alle code voor het productoverzicht -->
     <!-- code deel 3 van User story: Zoeken producten : de html -->
     <!-- de zoekbalk links op de pagina  -->
 

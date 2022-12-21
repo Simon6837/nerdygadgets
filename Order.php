@@ -1,5 +1,4 @@
 <?php
-// include __DIR__ . "/header.php";
 include "database.php";
 $databaseConnection = connectToDatabase();
 include_once 'CartFuncties.php';

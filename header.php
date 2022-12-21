@@ -1,9 +1,11 @@
-<!-- de inhoud van dit bestand wordt bovenaan elke pagina geplaatst -->
 <?php
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 include "database.php";
 $databaseConnection = connectToDatabase();
 ?>
+<!-- de inhoud van dit bestand wordt bovenaan elke pagina geplaatst -->
 <!DOCTYPE html>
 <html lang="en">
 

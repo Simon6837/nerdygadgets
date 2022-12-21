@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . "/header.php";
+include_once __DIR__ . "/header.php";
 $databaseConnection = connectToDatabase();
 //HAAL DIT WEG ALS DE LOGIN KLAAR IS
 $_SESSION['loggedInUserId'] = 6;
