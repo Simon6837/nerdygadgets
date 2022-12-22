@@ -58,14 +58,9 @@ function specialCharCheck($haystack)
     return false;
 }
 
-function emailCheck($haystack)
-{
-    if (str_contains($haystack, '@') and strlen($haystack >= 6 and str_contains((substr($haystack, -5)), '.'))) {
-        return true;
-    } else {
-        return false;
-    }
-};
+function emailCheck($email) {
+    return preg_match('/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/', $email);
+}
 
 function passwordCheck($haystack)
 {
