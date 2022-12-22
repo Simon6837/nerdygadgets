@@ -126,5 +126,7 @@ include_once "cartfuncties.php";
     </div>
     </main>
 </body>
-
+<?php
+include __DIR__ . "/footer.php";
+?>
 </html>
