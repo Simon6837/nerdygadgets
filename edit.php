@@ -51,11 +51,11 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
             }
         }
         if ($valuesCorrect) {
-            print("correct");
+            klantGegevensBewerken($data);
+            //hier komt een redirect als fix
         }
-        else {
-            print("fout");
-        }
+        
+
     }
 
     mysqli_close($databaseConnection);

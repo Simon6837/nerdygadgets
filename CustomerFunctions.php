@@ -18,11 +18,14 @@ IsEmployee, IsSalesperson, EmailAddress, LastEditedBy, ValidFrom, ValidTo, House
     return $result;
 }
 
-function klantGegevensBewerken($newData){
+function klantGegevensBewerken($data){
     $databaseConnection = connectToDatabase();
     // $dateT = date('Ý-m-d H:i:s');
     $editCustomer = mysqli_prepare($databaseConnection, "UPDATE people SET  logonname = ?, EmailAddress = ?, residence = ?, address = ?, Housenumber = ?, Addition = ?, ZIP_code = ? WHERE personid = " . $_SESSION['userdata']['loggedInUserId'] . "");
-    
+    mysqli_stmt_bind_param($editCustomer, 'ssssiss', $data["editGbrnaam"], $data["editE-mail"], $data["editwoonplaats"], $data["editadres"], $data["edithuisnummer"],$data["edithuisnummerT"], $data["editpostcode"]);
+    $result = mysqli_stmt_execute($editCustomer);
+    mysqli_close($databaseConnection);
+    return $result;
 }
 
 // defines all special characters we don't want in name, address and residence and checks if inputted values contains said values
