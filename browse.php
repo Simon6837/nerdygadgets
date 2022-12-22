@@ -6,7 +6,6 @@ include_once __DIR__ . "/header.php";
     $SortName = "price_low_high";
 
     $AmountOfPages = 0;
-    $queryBuildResult = "";
 
 
     if (isset($_GET['category_id'])) {
@@ -68,23 +67,7 @@ include_once __DIR__ . "/header.php";
             }
     }
     $SearchString = str_replace(["'", "\\"], "", $SearchString);
-    $searchValues = explode(" ", $SearchString);
-
-    $queryBuildResult = "";
-    if ($SearchString != "") {
-        for ($i = 0; $i < count($searchValues); $i++) {
-            if ($i != 0) {
-                $queryBuildResult .= "AND ";
-            }
-            $queryBuildResult .= "SI.SearchDetails LIKE '%$searchValues[$i]%' ";
-        }
-        if ($queryBuildResult != "") {
-            $queryBuildResult .= " OR ";
-        }
-        if ($SearchString != "" || $SearchString != null) {
-            $queryBuildResult .= "SI.StockItemID ='$SearchString'";
-        }
-    }
+    $searchValues = !empty($SearchString) ? explode(" ", $SearchString) : [];
 
 
     // <einde van de code voor zoekcriteria>
@@ -93,91 +76,75 @@ include_once __DIR__ . "/header.php";
 
     $Offset = $PageNumber * $ProductsOnPage;
 
-    if ($CategoryID != "") {
-        if ($queryBuildResult != "") {
-            $queryBuildResult .= " AND ";
-        }
-    }
-
     // code deel 2 van User story: Zoeken producten
     // <voeg hier de code in waarin het zoekresultaat opgehaald wordt uit de database>
-    if ($CategoryID == "") {
-        if ($queryBuildResult != "") {
-            $queryBuildResult = "WHERE " . $queryBuildResult;
-        }
 
-        $Query = "
-                SELECT SI.StockItemID, SI.StockItemName, SI.MarketingComments, TaxRate, RecommendedRetailPrice, ROUND(TaxRate * RecommendedRetailPrice / 100 + RecommendedRetailPrice,2) as SellPrice,
-                QuantityOnHand,
-                (SELECT ImagePath
-                FROM stockitemimages
-                WHERE StockItemID = SI.StockItemID LIMIT 1) as ImagePath,
-                (SELECT ImagePath FROM stockgroups JOIN stockitemstockgroups USING(StockGroupID) WHERE StockItemID = SI.StockItemID LIMIT 1) as BackupImagePath
-                FROM stockitems SI
-                JOIN stockitemholdings SIH USING(stockitemid)
-                " . $queryBuildResult . "
-                GROUP BY StockItemID
-                ORDER BY " . $Sort . "
-                LIMIT ?  OFFSET ?";
-
-
-        $Statement = mysqli_prepare($databaseConnection, $Query);
-        mysqli_stmt_bind_param($Statement, "ii",  $ProductsOnPage, $Offset);
-        mysqli_stmt_execute($Statement);
-        $ReturnableResult = mysqli_stmt_get_result($Statement);
-        $ReturnableResult = mysqli_fetch_all($ReturnableResult, MYSQLI_ASSOC);
-
-        $Query = "
-            SELECT count(*)
-            FROM stockitems SI
-            $queryBuildResult";
-        $Statement = mysqli_prepare($databaseConnection, $Query);
-        mysqli_stmt_execute($Statement);
-        $Result = mysqli_stmt_get_result($Statement);
-        $Result = mysqli_fetch_all($Result, MYSQLI_ASSOC);
+    // the query for the search
+    $searchQuery = "";
+    // the parameters for the query
+    $params = [];
+    // the parameter types
+    $types = "";
+    // if a category is selected add it to the query, with a new parameter for the category id and a new parameter type
+    if ($CategoryID !== "") {
+        $searchQuery = "JOIN stockitemstockgroups USING(StockItemID) JOIN stockgroups ON stockitemstockgroups.StockGroupID = stockgroups.StockGroupID WHERE ? IN (SELECT StockGroupID from stockitemstockgroups WHERE StockItemID = SI.StockItemID) ";
+        $types .= "i";
+        $params[] = $CategoryID;
     }
+
+    // if a search string is given add it to the query, with a new parameter for the search string and a new parameter type
+    if (!empty($_GET['search_string'])) {
+        if ($searchQuery != "") {
+            $searchQuery .= "AND ";
+        } else {
+            $searchQuery .= "WHERE ";
+        }
+        // the * is added to the search string to make it a wildcard search, meaning for example "chocolate" will also match "chocolates"
+        for ($i = 0; $i < count($searchValues); $i++) {
+            $searchValues[$i] .= "*";
+        }
+        // convert the search values array into a string to be used in the match statement (with commas between the values)
+        $matchString = implode(", ", $searchValues);
+        $searchQuery .= "MATCH(tags, searchdetails, MarketingComments) AGAINST (? IN BOOLEAN MODE)";
+        $types .= "s";
+        $params[] = $matchString;
+    }
+    // add params and types for the limit and offset
+    array_push($params, $ProductsOnPage, $Offset);
+    $types .= "ii";
+    // build the query
+    $Query = "SELECT SI.StockItemID, SI.StockItemName, SI.MarketingComments, TaxRate, RecommendedRetailPrice, ROUND(TaxRate * RecommendedRetailPrice / 100 + RecommendedRetailPrice,2) as SellPrice, QuantityOnHand, (SELECT ImagePath FROM stockitemimages WHERE StockItemID = SI.StockItemID LIMIT 1) as ImagePath, (SELECT ImagePath FROM stockgroups JOIN stockitemstockgroups USING(StockGroupID) WHERE StockItemID = SI.StockItemID LIMIT 1) as BackupImagePath FROM stockitems SI JOIN stockitemholdings SIH USING(stockitemid) " . $searchQuery .  " GROUP BY StockItemID ORDER BY SellPrice LIMIT ? OFFSET ? ";
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, $types, ...$params);
+    mysqli_stmt_execute($Statement);
+
+    $ReturnableResult = mysqli_stmt_get_result($Statement);
+    $ReturnableResult = mysqli_fetch_all($ReturnableResult, MYSQLI_ASSOC);
+
+    // get the amount of pages with a query that only returns the amount of products
+    $Query = "
+            SELECT count(DISTINCT StockItemID)
+            FROM stockitems SI
+            $searchQuery
+            ";
+    $types = substr($types, 0, -2);
+    array_pop($params);
+    array_pop($params);
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    if (!empty($params)) {
+        mysqli_stmt_bind_param($Statement, $types, ...$params);
+    }
+    mysqli_stmt_execute($Statement);
+    $Result = mysqli_stmt_get_result($Statement);
+    $Result = mysqli_fetch_all($Result, MYSQLI_ASSOC);
 
 
     // <einde van de code voor zoekresultaat>
     // einde deel 2 van User story: Zoeken producten
-
-    if ($CategoryID !== "") {
-        $Query = "
-           SELECT SI.StockItemID, SI.StockItemName, SI.MarketingComments, TaxRate, RecommendedRetailPrice,
-           ROUND(SI.TaxRate * SI.RecommendedRetailPrice / 100 + SI.RecommendedRetailPrice,2) as SellPrice,
-           QuantityOnHand,
-           (SELECT ImagePath FROM stockitemimages WHERE StockItemID = SI.StockItemID LIMIT 1) as ImagePath,
-           (SELECT ImagePath FROM stockgroups JOIN stockitemstockgroups USING(StockGroupID) WHERE StockItemID = SI.StockItemID LIMIT 1) as BackupImagePath
-           FROM stockitems SI
-           JOIN stockitemholdings SIH USING(stockitemid)
-           JOIN stockitemstockgroups USING(StockItemID)
-           JOIN stockgroups ON stockitemstockgroups.StockGroupID = stockgroups.StockGroupID
-           WHERE " . $queryBuildResult . " ? IN (SELECT StockGroupID from stockitemstockgroups WHERE StockItemID = SI.StockItemID)
-           GROUP BY StockItemID
-           ORDER BY " . $Sort . "
-           LIMIT ? OFFSET ?";
-
-        $Statement = mysqli_prepare($databaseConnection, $Query);
-        mysqli_stmt_bind_param($Statement, "iii", $CategoryID, $ProductsOnPage, $Offset);
-        mysqli_stmt_execute($Statement);
-        $ReturnableResult = mysqli_stmt_get_result($Statement);
-        $ReturnableResult = mysqli_fetch_all($ReturnableResult, MYSQLI_ASSOC);
-
-        $Query = "
-                SELECT count(*)
-                FROM stockitems SI
-                WHERE " . $queryBuildResult . " ? IN (SELECT SS.StockGroupID from stockitemstockgroups SS WHERE SS.StockItemID = SI.StockItemID)";
-        $Statement = mysqli_prepare($databaseConnection, $Query);
-        mysqli_stmt_bind_param($Statement, "i", $CategoryID);
-        mysqli_stmt_execute($Statement);
-        $Result = mysqli_stmt_get_result($Statement);
-        $Result = mysqli_fetch_all($Result, MYSQLI_ASSOC);
-    }
     $amount = $Result[0];
     if (isset($amount)) {
-        $AmountOfPages = ceil($amount["count(*)"] / $ProductsOnPage);
+        $AmountOfPages = ceil($amount["count(DISTINCT StockItemID)"] / $ProductsOnPage);
     }
-
 
     function getVoorraadTekst($actueleVoorraad)
     {
