@@ -48,7 +48,7 @@ $databaseConnection = connectToDatabase();
                 $_SESSION['userdata']['ZIP_code'] = $userDetails['ZIP_code'];
                 $_SESSION['userdata']['addition'] = $userDetails['addition'];
 
-                $script = "<script>window.location = './viewOrder.php';</script>";
+                $script = "<script>window.location = './edit.php';</script>";
                 echo $script;
             } else {
                 print("<label class='inputError'><i>De ingevoerde combinatie van gebruikersnaam en wachtwoord bestaat niet</i></label><br>");

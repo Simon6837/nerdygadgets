@@ -64,9 +64,8 @@ $databaseConnection = connectToDatabase();
                     </li>
                     <li>
                         <?php
-                        if(isset($_SESSION['loggedInUserId'])) {
-                            
-                            print($_SESSION['loggedInUserId']);?>
+                        if(isset($_SESSION['userdata']['loggedInUserId'])) {
+                            ?>
                             <a href="edit.php" class="HrefDecoration"><i class="fas fa-user red"></i></a><?php
                         }
                         else {

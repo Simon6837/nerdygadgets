@@ -2,8 +2,8 @@
 include_once __DIR__ . "/header.php";
 $databaseConnection = connectToDatabase();
 //HAAL DIT WEG ALS DE LOGIN KLAAR IS
-if (isset($_SESSION['loggedInUserId'])) {
-    $nameDatabase = mysqli_prepare($databaseConnection, "SELECT fullname, logonname, preferredname FROM people WHERE personid = " . $_SESSION['loggedInUserId'] . "");
+if (isset($_SESSION['userdata']['loggedInUserId'])) {
+    $nameDatabase = mysqli_prepare($databaseConnection, "SELECT fullname, logonname,EmailAddress, preferredname FROM people WHERE personid = " . $_SESSION['userdata']['loggedInUserId'] . "");
     mysqli_stmt_execute($nameDatabase);
     $nameResult = mysqli_stmt_get_result($nameDatabase);
     $name = mysqli_fetch_all($nameResult, MYSQLI_ASSOC);
@@ -29,7 +29,6 @@ if (isset($_SESSION['loggedInUserId'])) {
 </head>
 
 <body>
-    <form method="post" action="Logout.php">
     <table class="editContainer">
         <tr>
             <td>
@@ -38,7 +37,7 @@ if (isset($_SESSION['loggedInUserId'])) {
         </tr>
         <tr>
             <td><a class="editUserText">Email</a></td>
-            <td><input type="text" disabled class="editText" value="<?php echo $name[0]["logonname"] ?>"></td>
+            <td><input type="text" disabled class="editText" value="<?php echo $name[0]["EmailAddress"] ?>"></td>
         </tr>
         <tr>
             <td><a class="editUserText">Wachtwoord</a></td>
@@ -51,13 +50,18 @@ if (isset($_SESSION['loggedInUserId'])) {
             </div>
         </tr>
         <tr>
-            <td><h1>Adresgegevens</h1></td>
+            <td>
+                <h1>Adresgegevens</h1>
+            </td>
         </tr>
         <tr>
-            <td><input type="submit" value="uitloggen"> </td>
+            <td>
+                <form method="post" action="Logout.php">
+                    <input type="submit" value="uitloggen">
+                </form>
+            </td>
         </tr>
     </table>
-    </form>
 </body>
 
 </html>
