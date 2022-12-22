@@ -101,7 +101,7 @@ if (isset($_POST['toevoegen'])){
     <input class="inputTextForm" type="text" name="Gbrnaam" value="<?php print($data["Gbrnaam"]); ?>" placeholder="gebruikersnaam"/>
     <label class="smallTextDesc"><i>Aantal karakters: 3-20, mag geen '@' bevatten</i></label><br>
     <?php if (isset($inputError['gebruikersnaam'])) { print ("<label class='inputError'><i>Gebruikernaam voldoet niet aan de eisen</i></label><br>");}?>
-    <?php if (isset($inputError['gebruikersnaamExists'])) { print ("<label class='inputError'><i>Gebruikersnaam bestaat al</i></label><br>");}?>
+    <?php if (isset($inputError['gebruikersnaamExists'])) { print ("<label class='inputError'><i>Er bestaat al een account met deze gebruikersnaam</i></label><br>");}?>
     
     <label class="inputTextFormTitle">Wachtwoord<label style="color: red" >*</label></label>
     <input class="inputTextForm" type="password" name="WW" value="<?php print($data["WW"]); ?>" placeholder="wachtwoord" required>
