@@ -80,31 +80,40 @@
     // code deel 2 van User story: Zoeken producten
     // <voeg hier de code in waarin het zoekresultaat opgehaald wordt uit de database>
 
+    // the query for the search
     $searchQuery = "";
+    // the parameters for the query
     $params = [];
+    // the parameter types
     $types = "";
+    // if a category is selected add it to the query, with a new parameter for the category id and a new parameter type
     if ($CategoryID !== "") {
         $searchQuery = "JOIN stockitemstockgroups USING(StockItemID) JOIN stockgroups ON stockitemstockgroups.StockGroupID = stockgroups.StockGroupID WHERE ? IN (SELECT StockGroupID from stockitemstockgroups WHERE StockItemID = SI.StockItemID) ";
         $types .= "i";
         $params[] = $CategoryID;
     }
+
+    // if a search string is given add it to the query, with a new parameter for the search string and a new parameter type
     if (!empty($_GET['search_string'])) {
         if ($searchQuery != "") {
             $searchQuery .= "AND ";
         } else {
             $searchQuery .= "WHERE ";
         }
+        // the * is added to the search string to make it a wildcard search, meaning for example "chocolate" will also match "chocolates"
         for ($i = 0; $i < count($searchValues); $i++) {
             $searchValues[$i] .= "*";
         }
+        // convert the search values array into a string to be used in the match statement (with commas between the values)
         $matchString = implode(", ", $searchValues);
-
         $searchQuery .= "MATCH(tags, searchdetails, MarketingComments) AGAINST (? IN BOOLEAN MODE)";
         $types .= "s";
         $params[] = $matchString;
     }
-    $types .= "ii";
+    // add params and types for the limit and offset
     array_push($params, $ProductsOnPage, $Offset);
+    $types .= "ii";
+    // build the query
     $Query = "SELECT SI.StockItemID, SI.StockItemName, SI.MarketingComments, TaxRate, RecommendedRetailPrice, ROUND(TaxRate * RecommendedRetailPrice / 100 + RecommendedRetailPrice,2) as SellPrice, QuantityOnHand, (SELECT ImagePath FROM stockitemimages WHERE StockItemID = SI.StockItemID LIMIT 1) as ImagePath, (SELECT ImagePath FROM stockgroups JOIN stockitemstockgroups USING(StockGroupID) WHERE StockItemID = SI.StockItemID LIMIT 1) as BackupImagePath FROM stockitems SI JOIN stockitemholdings SIH USING(stockitemid) " . $searchQuery .  " GROUP BY StockItemID ORDER BY SellPrice LIMIT ? OFFSET ? ";
     $Statement = mysqli_prepare($databaseConnection, $Query);
     mysqli_stmt_bind_param($Statement, $types, ...$params);
@@ -113,6 +122,7 @@
     $ReturnableResult = mysqli_stmt_get_result($Statement);
     $ReturnableResult = mysqli_fetch_all($ReturnableResult, MYSQLI_ASSOC);
 
+    // get the amount of pages with a query that only returns the amount of products
     $Query = "
             SELECT count(DISTINCT StockItemID)
             FROM stockitems SI
