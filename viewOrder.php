@@ -41,22 +41,37 @@ include_once "cartfuncties.php";
     <div class="order-cart-container">
         <h2>Bestelling</h2>
         <?php
+        $total = 0;
         foreach ($cart as $key => $item) {
             $StockItem = getStockItem($key, $databaseConnection);
             $exPrice = round($StockItem['SellPrice'] / 121 * 100, 2);
+            $total += $exPrice * $item;
             $imagepath = ($stockItemImage = getStockItemImage($key, $databaseConnection)) ? "Public/StockItemIMG/" . $stockItemImage[0]['ImagePath'] : "Public/StockGroupIMG/" . $StockItem['BackupImagePath'];
         ?>
             <div class="order-cart-item">
                 <img src="<?php echo $imagepath; ?>" alt="image of <?php echo $StockItem['StockItemName']; ?>" class="order-cart-image">
                 <div class="cart-item-info">
                     <div class="cart-item-name"><?php echo $StockItem['StockItemName']; ?></div>
-                    <div class="cart-item-price">€<?php echo $exPrice; ?></div>
+                    <div class="cart-item-price">€<?php echo $exPrice; ?> per stuk</div>
                     <div class="cart-item-amount">Aantal: <?php echo $item; ?></div>
                 </div>
             </div>
         <?php
         }
         ?>
+        <table>
+            <tr>
+                <th colspan='5'>Totaal:</th>
+            </tr>
+            <tr>
+                <td colspan='4' style="color:red"><i>Exclusief 21% btw</i></td>
+                <td style="color:red"><i>€<?php print $total ?></i></td>
+            </tr>
+            <tr>
+                <td colspan='4' style="color:red">Inclusief 21% btw</td>
+                <td style=color:red;><u>€<?php print round($total * 1.21, 2) ?></u></td>
+            </tr>
+        </table>
     </div>
     <!-- customer data and order button -->
     <div class="order-details">
