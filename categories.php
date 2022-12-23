@@ -1,10 +1,9 @@
-<!-- dit bestand bevat alle code voor de pagina die categorieën laat zien -->
 <?php
-
-include __DIR__ . "/header.php";
+include_once __DIR__ . "/header.php";
 $StockGroups = getStockGroups($databaseConnection);
 
 ?>
+<!-- dit bestand bevat alle code voor de pagina die categorieën laat zien -->
 <div id="Wrap">
     <?php if (isset($StockGroups)) {
         $i = 0;

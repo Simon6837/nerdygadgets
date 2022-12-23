@@ -5,7 +5,7 @@
 </div>
 </div>
 <?php
-@include_once 'notification.php';
+@include_once 'components/notifications.php';
 ?>
 </body>
 

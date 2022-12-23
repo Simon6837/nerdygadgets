@@ -1,8 +1,8 @@
-<!-- dit bestand bevat alle code voor de pagina die één product laat zien -->
 <?php
-include __DIR__ . "/header.php";
+include_once __DIR__ . "/header.php";
 
 include_once "cartfuncties.php";
+//set the text for the stock item
 function getVoorraadTekst($actueleVoorraad)
 {
     if ($actueleVoorraad > 1000) {
@@ -14,18 +14,21 @@ function getVoorraadTekst($actueleVoorraad)
 $StockItem = getStockItem($_GET['id'], $databaseConnection);
 $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 ?>
+<!-- dit bestand bevat alle code voor de pagina die één product laat zien -->
 <script>
+    // get product temperature by sending a request to the temperature API
     async function getTemperature() {
-        let request = await fetch("temperaturefixes.php", {
+        let request = await fetch("temperatureMeasurement.php", {
         }).then((response) => response.json()).then((data) => {
+            // display the temperature on the page
             document.getElementById("temperature").innerHTML = `Temperatuur: ${data.data}°C`;
         });
     }
+    // only get temperature of cold products
     if (<?php echo $StockItem['IsChillerStock']?> == 1) {
         getTemperature();
         setInterval(getTemperature, 3000);
     }
-
 </script>
 <div id="CenteredContent">
     <?php
@@ -79,6 +82,7 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                                 &#10148;
                             </a>
                             <script>
+                                // show the buttons when the mouse is over the image
                                 document.querySelector("#ImageFrame").addEventListener("mouseover", function() {
                                     document.querySelector("#button").classList.remove("hide");
                                     document.querySelector("#button2").classList.remove("hide");
@@ -111,14 +115,32 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                                             print getVoorraadTekst(substr($StockItem['QuantityOnHand'], 10));
                                         } ?></div>
             <div id="temperature">
-                
+
             </div>
             <div id="StockItemHeaderLeft">
                 <div class="CenterPriceLeft">
                     <div class="CenterPriceLeftChild">
                         <div class="StockItemPriceText"><b><?php print sprintf("€ %.2f", $StockItem['SellPrice']); ?></b></div>
                         <div class="InclBtw"> Inclusief BTW </div>
-                        <a href='<?php $_SERVER['PHP_SELF'] ?>?addId=<?php print $_GET['id'] ?>&returnToView=true'>Toevoegen aan winkelwagen</a>
+
+                        <input class="AmountInput" id="addToCartAmount" min="1" type="number" value="1">
+                        <div onclick="addProduct()" class="addProduct">Toevoegen aan winkelwagen</div>
+                        <script>
+                            //get the amount of the product and add it to the cart
+                            function addProduct() {
+                                let amount = parseInt(document.getElementById("addToCartAmount").value);
+                                //if the item is in the cart add the amount to the total amount
+                                let stockInCart = <?php print isset($_SESSION["cart"][$StockItem['StockItemID']]) ? $_SESSION["cart"][$StockItem['StockItemID']] : 0  ?>;
+                                //check if the amount is higher than the stock
+                                if ((amount + stockInCart) > <?php echo substr($StockItem['QuantityOnHand'], 10) ?>) {
+                                    //if the amount is higher than the stock, ask the user if he wants to still add the product to the cart
+                                    if (!confirm("Er is niet genoeg voorraad, wilt u het product toch toevoegen aan de winkelwagen?\nDit kan leiden tot vertraging in de levering.")) {
+                                        return;
+                                    }
+                                }
+                                window.location.href = "cart.php?addId=<?php print $_GET['id'] ?>&amount=" + amount;
+                            }
+                        </script>
                     </div>
                 </div>
             </div>
@@ -128,43 +150,33 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
             <h3>Artikel beschrijving</h3>
             <p><?php print $StockItem['SearchDetails']; ?></p>
         </div>
-        <div id="StockItemSpecifications">
-            <h3>Artikel specificaties</h3>
-            <?php
-            $CustomFields = json_decode($StockItem['CustomFields'], true);
-            if (is_array($CustomFields)) { ?>
-                <table>
-                    <thead>
-                        <th>Naam</th>
-                        <th>Data</th>
-                    </thead>
-                    <?php
-                    foreach ($CustomFields as $SpecName => $SpecText) { ?>
-                        <tr>
-                            <td>
-                                <?php print $SpecName; ?>
-                            </td>
-                            <td>
-                                <?php
-                                if (is_array($SpecText)) {
-                                    foreach ($SpecText as $SubText) {
-                                        print $SubText . " ";
-                                    }
-                                } else {
-                                    print $SpecText;
-                                }
-                                ?>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </table><?php
-                    } else { ?>
 
-                <p><?php print $StockItem['CustomFields']; ?>.</p>
-            <?php
-                    }
-            ?>
+        <div id="SimilarProducts"> <!--If item number is 1,2 or max-  
+               1, max-2, change similar items print-->
+            <h3>Bekijk ook deze producten</h3>
+            <div id="SimilarProductsList" style="display:flex;">
+                    <?php ; $c=1;for ($i=-2;$i<3;$i++) {
+                        if ($i!=0) {
+                            $SimilarItem = getStockItem($_GET['id']+$i, $databaseConnection); 
+                            if (!$SimilarItem) {
+                                $SimilarItem = getStockItem($c, $databaseConnection);
+                                $StockItemImage = getStockItemImage($c, $databaseConnection);
+                                $c++;
+                            } else {
+                                $StockItemImage = getStockItemImage($_GET['id']+$i, $databaseConnection);  
+                            }?>
+                            <div id="SimilarProductsListItem" onclick="window.location.replace('view.php?id=<?php print $SimilarItem['StockItemID']; ?>')">
+                               <div id="SimilarProductsListImageBox"> <?php if ($StockItemImage){?><img id="SimilarProductsListImage" src="Public/StockItemIMG/<?php print $StockItemImage[0]['ImagePath']?>">
+                                    <?php } else {?> <img id="SimilarProductsListImage" style="height:250px !important;" src='Public/StockGroupIMG/<?php print $SimilarItem['BackupImagePath']; ?>'> <?php } ?>
+                               </div>
+                               <div id="SimiliarProductsListText"><?php print $SimilarItem['StockItemName']?></div>
+                             </div>
+                            <?php ;}
+                    }?>
+            </div>
         </div>
+        <!-- deze div kan gebruikt worden voor aanbevolen items -->
+        <!-- <div id="StockItemSpecifications"></div> -->
     <?php
     } else {
     ?><h2 id="ProductNotFound">Het opgevraagde product is niet gevonden.</h2><?php
