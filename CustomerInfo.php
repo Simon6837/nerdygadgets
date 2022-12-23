@@ -86,14 +86,12 @@ if (isset($_POST['submit'])){
         <label class="inputTextFormTitle">Postcode<label style="color: red">*</label></label>
         <input class="inputTextForm" type="text" name="postcode" value="<?php print($data["postcode"]); ?>" placeholder="postcode" required />
         <?php if (isset($inputError['postcode'])) { print ("<label class='inputError'><i>Postcode voldoet niet aan de standaard vorm</i></label><br>");}?>
-        <input class="button2 accountAanmakenTopMargin" type="submit" name="submit" value="submit" formaction="CustomerInfo.php"/>
+        <input class="button2 accountAanmakenTopMargin" type="submit" name="submit" value="Doorgaan met bestellen" formaction="CustomerInfo.php"/>
     </form>
 
     <br><label>Heeft u een account?</label>
 
-    <form action="Login.php">
-        <input class="button2" type="submit" value="Inloggen">
-    </form>
+        <input onclick="window.location.href='Login.php?cameFromOrder=true'" class="button2" type="submit" value="Inloggen">
 
     <label class="smallTextDesc">Nog geen account?</label>
 

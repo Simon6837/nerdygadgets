@@ -151,7 +151,7 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 
         <div id="SimilarProducts"> <!--If item number is 1,2 or max-  
                1, max-2, change similar items print-->
-            <h3>Vergelijkbare producten</h3>
+            <h3>Bekijk ook deze producten</h3>
             <div id="SimilarProductsList" style="display:flex;">
                     <?php ; $c=1;for ($i=-2;$i<3;$i++) {
                         if ($i!=0) {
