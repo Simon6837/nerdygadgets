@@ -11,6 +11,12 @@ $databaseConnection = connectToDatabase();
         <input class="inputTextForm" type="text" name="Gbrnaam" placeholder="gebruiker@voorbeeld.nl" required />
         <label class="inputTextFormTitle">Wachtwoord</label>
         <input class="inputTextForm" type="password" name="WW" placeholder="wachtwoord" required>
+        <?php
+        // if the user came from the order page, set this to field to true to remember it
+        if (isset($_GET['cameFromOrder'])) {
+            print '<input type="text" name="cameFromOrder" value="true" style="display: none">';
+        }
+        ?>
         <input class="button2 accountAanmakenTopMargin" type="submit" name="button" value="Inloggen">
     </form>
 
@@ -47,8 +53,13 @@ $databaseConnection = connectToDatabase();
                 $_SESSION['userdata']['housenumber'] = $userDetails['housenumber'];
                 $_SESSION['userdata']['ZIP_code'] = $userDetails['ZIP_code'];
                 $_SESSION['userdata']['addition'] = $userDetails['addition'];
-
-                $script = "<script>window.location = './edit.php';</script>";
+                // if user came from order page returns user to order page
+                //else returns user to home page
+                if (isset($_POST['cameFromOrder'])) {
+                    $script = "<script>window.location = './viewOrder.php';</script>";
+                } else {
+                    $script = "<script>window.location = './';</script>";
+                }
                 echo $script;
             } else {
                 print("<label class='inputError'><i>De ingevoerde combinatie van gebruikersnaam en wachtwoord bestaat niet</i></label><br>");
