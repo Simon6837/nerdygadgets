@@ -969,3 +969,13 @@ ul#ul-class-price li {
   margin-left: 0.5%;
   margin-top: 0;
 }
+
+.orderImageCenter {
+  display: flex;
+  justify-content: center;
+}
+
+.orderGIF {
+  margin:auto;
+  width: 500px !important;
+}
