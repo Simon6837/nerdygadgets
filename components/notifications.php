@@ -32,6 +32,14 @@ if (isset($_GET['showDeletedMessage'])) {
     </div>
 <?php
 }
+if (isset($_GET['showAccountCreatedMessage'])) {
+?>
+    <div class="notificationBox">
+        <div class="notificationTitle">Gelukt!</div>
+        <div class="notificationText">Uw account is aangemaakt</div>
+    </div>
+<?php
+}
 ?>
 <script>
     //remove the notification after 3 seconds
@@ -48,6 +56,8 @@ if (isset($_GET['showDeletedMessage'])) {
     url = url.replace('?showAmountChangedMessage', '');
     url = url.replace('&showErrorMessage', '');
     url = url.replace('?showErrorMessage', '');
+    url = url.replace('&showAccountCreatedMessage', '');
+    url = url.replace('?showAccountCreatedMessage', '');
     url = url.replace('=true', '');
     //replace the url without the get parameters but don't reload the page
     window.history.replaceState({}, 'document.title', url);

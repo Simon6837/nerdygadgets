@@ -79,7 +79,7 @@ if (isset($_POST['toevoegen'])){
         //adds the given values to the database if all requirements have been met.
         $data["melding"] = klantGegevensToevoegen($data) ? 'Account is succesvol aangemaakt!' : 'Account is niet aangemaakt!';
         sleep(2);
-        $script = "<script>window.location = './Login.php';</script>";
+        $script = "<script>window.location = './viewOrder.php?showAccountCreatedMessage=true';</script>";
         echo $script;
     }
 }
