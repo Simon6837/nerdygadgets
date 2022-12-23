@@ -3,7 +3,7 @@ include_once __DIR__ . "/header.php";
 include_once 'CustomerFunctions.php';
 $databaseConnection = connectToDatabase();
 if (isset($_SESSION['userdata']['loggedInUserId'])) {
-
+    //set the data from the post to the data array for easier access
     $data["editE-mail"] = $_POST["editE-mail"] ?? "";
     $data["editGbrnaam"] = $_POST["editGbrnaam"] ?? "";
     $data["editadres"] = $_POST["editadres"] ?? "";
@@ -45,11 +45,12 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
                 $inputError['huisnummerT'] = true;
             }
         }
+        //If all the requirements are met, the data is sent to the database
         if ($valuesCorrect) {
             klantGegevensBewerken($data);
-            //hier komt een redirect als fix
         }
     }
+    //Gets the customer data from the database
     $nameDatabase = mysqli_prepare($databaseConnection, "SELECT logonname, EmailAddress, residence, address, Housenumber, Addition, ZIP_code FROM people WHERE personid = " . $_SESSION['userdata']['loggedInUserId'] . "");
     mysqli_stmt_execute($nameDatabase);
     $nameResult = mysqli_stmt_get_result($nameDatabase);
@@ -74,6 +75,7 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
         }
     }
 } else {
+    //If the user is not logged in, they are redirected to the login page
 ?>
     <script>
         window.location.replace('login.php')

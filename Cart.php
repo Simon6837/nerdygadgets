@@ -20,7 +20,7 @@ include_once "cartfuncties.php";
         <?php
         $total = 0;
         $cart = getCart();
-        //if the cart is empty show it. and prevent running the rest of the code
+        //if the cart is empty show a message and prevent running the rest of the code
         if (empty($cart)) {
             echo "<tr style='text-align: center'><td colspan='5'>Uw winkelwagen is leeg</td></tr>";
             include __DIR__ . "/footer.php";
@@ -38,7 +38,7 @@ include_once "cartfuncties.php";
         foreach ($cart as $key => $item) {
             //get the item
             $StockItem = getStockItem($key, $databaseConnection);
-            //remove btw because milan wants to
+            //remove btw for easier calculation
             $exPrice = round($StockItem['SellPrice'] / 121 * 100, 2);
             //calculate the total price
             $total += $exPrice * $item;
@@ -85,7 +85,6 @@ include_once "cartfuncties.php";
             <td style=color:red;><u>€<?php print round($total * 1.21, 2) ?></u></td>
         </tr>
         <tr style='text-align: right;'>
-            <!-- <td colspan='5'><a href='https://www.ideal.nl/demo/en/?screens=dskweb&bank=rabo&type=dsk'>Bestellen</a></td> -->
             <td colspan="5">
                 <?php if (isset($_SESSION['userdata']['loggedInUserId'])) : ?>
                     <form action="viewOrder.php">
@@ -101,6 +100,7 @@ include_once "cartfuncties.php";
     </table>
 
     <p class="shopFurther">
+        <!-- if the user clicks the shop further button redirect them to the last visited product -->
         <?php if (isset($_GET['returnId'])) : ?>
             <a href='view.php?id=<?php print($_GET['returnId']) ?>'>Verder met winkelen</a>
         <?php else : ?>

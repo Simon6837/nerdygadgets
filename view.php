@@ -2,6 +2,7 @@
 include_once __DIR__ . "/header.php";
 
 include_once "cartfuncties.php";
+//set the text for the stock item
 function getVoorraadTekst($actueleVoorraad)
 {
     if ($actueleVoorraad > 1000) {
@@ -81,6 +82,7 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                                 &#10148;
                             </a>
                             <script>
+                                // show the buttons when the mouse is over the image
                                 document.querySelector("#ImageFrame").addEventListener("mouseover", function() {
                                     document.querySelector("#button").classList.remove("hide");
                                     document.querySelector("#button2").classList.remove("hide");

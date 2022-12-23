@@ -13,7 +13,7 @@ $data["huisnummerT"] = $_POST["huisnummerT"] ?? "";
 $inputError = array();
 
 $_SESSION['postInfo'] = $_POST;
-
+// if button is pressed checks if all input values correspond with set restrictions.
 if (isset($_POST['submit'])){
     $valuesCorrect = true;
     
@@ -48,6 +48,7 @@ if (isset($_POST['submit'])){
         }
     }
     if ($valuesCorrect){
+        //if all values are correct, it will redirect to the viewOrder page
         $script = "<script>window.location = './viewOrder.php';</script>";
         echo $script;
     }
