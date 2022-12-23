@@ -50,6 +50,14 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
                 $inputError['huisnummerT'] = true;
             }
         }
+        if (mysqli_num_rows(mysqli_query($databaseConnection, "SELECT logonname FROM People WHERE logonname = '" . $data['editUserName'] . "' and personid != " . $_SESSION['userdata']['loggedInUserId'] . ""))) {
+            $inputError['gebruikersnaamExists'] = true;
+            $valuesCorrect = false;
+        }
+        if (mysqli_num_rows(mysqli_query($databaseConnection, "SELECT emailaddress FROM People WHERE emailaddress = '" . $data['editE-mail'] . "' and personid != " . $_SESSION['userdata']['loggedInUserId'] . ""))) {
+            $inputError['emailExists'] = true;
+            $valuesCorrect = false;
+        }
         //If all the requirements are met, the data is sent to the database
         if ($valuesCorrect) {
             klantGegevensBewerken($data);
@@ -113,6 +121,9 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
                     <?php if (isset($inputError['email'])) {
                         print("<label class='inputError'><i>Ongeldig e-mailadres</i></label><br>");
                     } ?>
+                    <?php if (isset($inputError['emailExists'])) {
+                        print("<label class='inputError'><i>Er bestaat al een account met dit e-mailadres</i></label><br>");
+                    } ?>
                 </td>
                 <td><input type="text" class="inputTextForm" name="editE-mail" value="<?php echo $name[0]["EmailAddress"] ?>"></td>
             </tr>
@@ -122,6 +133,10 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
                     <?php if (isset($inputError['userName'])) {
                         print("<label class='inputError'><i>de naam voldoet niet aan de eisen</i></label><br>");
                     } ?>
+                    <?php if (isset($inputError['gebruikersnaamExists'])) {
+                        print("<label class='inputError'><i>Er bestaat al een account met deze gebruikersnaam</i></label><br>");
+                    } ?>
+
                 </td>
                 <td><input type="text" class="inputTextForm" name="editUserName" value="<?php echo $name[0]["logonName"] ?>"></td>
             </tr>
@@ -150,28 +165,28 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
             </tr>
             <tr>
                 <td><b class="editUserText">Huisnummer</b>
-                <br>
-                <?php if (isset($inputError['huisnummer'])) {
-                    print("<label class='inputError'><i>Huisnummer voldoet niet aan de eisen</i></label><br>");
-                } ?>
+                    <br>
+                    <?php if (isset($inputError['huisnummer'])) {
+                        print("<label class='inputError'><i>Huisnummer voldoet niet aan de eisen</i></label><br>");
+                    } ?>
                 </td>
                 <td><input type="text" class="inputTextForm" name="edithuisnummer" value="<?php echo $name[0]["Housenumber"] ?>"></td>
             </tr>
             <tr>
                 <td><b class="editUserText">Toevoeging</b>
-                <br>
-                <?php if (isset($inputError['huisnummerT'])) {
-                    print("<label class='inputError'><i>Huisnummer toevoeging voldoet niet aan de eisen</i></label><br>");
-                } ?>
+                    <br>
+                    <?php if (isset($inputError['huisnummerT'])) {
+                        print("<label class='inputError'><i>Huisnummer toevoeging voldoet niet aan de eisen</i></label><br>");
+                    } ?>
                 </td>
                 <td><input type="text" class="inputTextForm" name="edithuisnummerT" value="<?php echo $name[0]["Addition"] ?>"></td>
             </tr>
             <tr>
                 <td><b class="editUserText">Postcode</b>
-                <br>
-                <?php if (isset($inputError['postcode'])) {
-                    print("<label class='inputError'><i>Postcode voldoet niet aan de eisen</i></label><br>");
-                } ?>
+                    <br>
+                    <?php if (isset($inputError['postcode'])) {
+                        print("<label class='inputError'><i>Postcode voldoet niet aan de eisen</i></label><br>");
+                    } ?>
                 </td>
                 <td><input type="text" class="inputTextForm" name="editpostcode" value="<?php echo $name[0]["ZIP_code"] ?>"></td>
             </tr>
@@ -242,4 +257,5 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
     </table>
 </body>
 <?php include 'footer.php'; ?>
+
 </html>
