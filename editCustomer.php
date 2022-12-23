@@ -15,7 +15,6 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
     $inputError = array();
     if (isset($_POST['accountGegevensAanpassen'])) {
         $valuesCorrect = true;
-
         if (!emailCheck($data['editE-mail'])) {
             $valuesCorrect = false;
             $inputError['email'] = true;
@@ -56,6 +55,24 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
     $nameResult = mysqli_stmt_get_result($nameDatabase);
     $name = mysqli_fetch_all($nameResult, MYSQLI_ASSOC);
     mysqli_close($databaseConnection);
+    //Checks if the password form is submitted
+    if (isset($_POST['changePassword'])) {
+        $response = changePassword($_POST['oldPassword'], $_POST['newPassword'], $_POST['newPasswordRepeat']);
+        if ($response['status'] == 'error') {
+            if ($response['type'] == 'oldPassword') {
+                $inputError['oldPassword'] = true;
+            }
+            if ($response['type'] == 'match') {
+                $inputError['matchPassword'] = true;
+            }
+            if ($response['type'] == 'requirments') {
+                $inputError['requirementsPassword'] = true;
+            }
+        }
+        if ($response['status'] == 'success') {
+            $inputError['successPassword'] = true;
+        }
+    }
 } else {
 ?>
     <script>
@@ -63,8 +80,6 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
     </script>
 <?php
 }
-
-
 
 ?>
 <!doctype html>
@@ -164,24 +179,47 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
         <tr>
             <td>
                 <h1>Wachtwoord aanpassen</h1>
+                <br>
+                <?php if (isset($inputError['successPassword'])) {
+                    print("<label style='color: green'>Het wachtwoord is aangepast</label><br>");
+                } ?>
             </td>
         </tr>
-        <tr>
-            <td><b class="editUserText">Huidig wachtwoord</b></td>
-            <td><input type="password" class="editText"></td>
-        </tr>
-        <tr>
-            <td><b class="editUserText">Nieuw wachtwoord</b></td>
-            <td><input type="password" class="editText"></td>
-        </tr>
-        <tr>
-            <td><b class="editUserText">Nieuw wachtwoord herhalen</b></td>
-            <td><input type="password" class="editText"></td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="opslaan"></td>
-        </tr>
-
+        <form method="post" action="editCustomer.php">
+            <tr>
+                <td>
+                    <b class="editUserText">Huidig wachtwoord</b>
+                    <br>
+                    <?php if (isset($inputError['oldPassword'])) {
+                        print("<label class='inputError'><i>Het oude wachtwoord is fout</i></label><br>");
+                    } ?>
+                </td>
+                <td><input type="password" class="editText" name="oldPassword"></td>
+            </tr>
+            <tr>
+                <td>
+                    <b class="editUserText">Nieuw wachtwoord</b>
+                    <br>
+                    <?php if (isset($inputError['requirementsPassword'])) {
+                        print("<label class='inputError'><i>Het nieuwe wachtwoord voldoet niet aan de eisen</i></label><br>");
+                    } ?>
+                </td>
+                <td><input type="password" class="editText" name="newPassword"></td>
+            </tr>
+            <tr>
+                <td>
+                    <b class="editUserText">Nieuw wachtwoord herhalen</b>
+                    <br>
+                    <?php if (isset($inputError['matchPassword'])) {
+                        print("<label class='inputError'><i>het nieuwe wachtwoord komt niet overeen</i></label><br>");
+                    } ?>
+                </td>
+                <td><input type="password" class="editText" name="newPasswordRepeat"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="opslaan" name="changePassword"></td>
+            </tr>
+        </form>
     </table>
 </body>
 
