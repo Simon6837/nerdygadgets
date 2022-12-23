@@ -17,7 +17,7 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 <script>
     // get product temperature by sending a request to the temperature API
     async function getTemperature() {
-        let request = await fetch("temperaturefixes.php", {
+        let request = await fetch("temperatureMeasurement.php", {
         }).then((response) => response.json()).then((data) => {
             // display the temperature on the page
             document.getElementById("temperature").innerHTML = `Temperatuur: ${data.data}°C`;
