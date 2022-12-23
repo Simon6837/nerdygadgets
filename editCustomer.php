@@ -96,13 +96,6 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
     <table class="editContainer">
         <tr>
             <td>
-                <form method="post" action="Logout.php">
-                    <input type="submit" value="uitloggen">
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td>
                 <h1>Accountgegevens</h1>
             </td>
         </tr>
@@ -114,7 +107,7 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
                         print("<label class='inputError'><i>Ongeldig e-mailadres</i></label><br>");
                     } ?>
                 </td>
-                <td><input type="text" class="editText" name="editE-mail" value="<?php echo $name[0]["EmailAddress"] ?>"></td>
+                <td><input type="text" class="inputTextForm" name="editE-mail" value="<?php echo $name[0]["EmailAddress"] ?>"></td>
             </tr>
             <tr>
                 <td><b class="editUserText">Naam</b>
@@ -123,7 +116,7 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
                         print("<label class='inputError'><i>Gebruikernaam voldoet niet aan de eisen</i></label><br>");
                     } ?>
                 </td>
-                <td><input type="text" class="editText" name="editGbrnaam" value="<?php echo $name[0]["logonname"] ?>"></td>
+                <td><input type="text" class="inputTextForm" name="editGbrnaam" value="<?php echo $name[0]["logonname"] ?>"></td>
             </tr>
             <tr>
                 <td>
@@ -137,7 +130,7 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
                         print("<label class='inputError'><i>Adres voldoet niet aan de eisen</i></label><br>");
                     } ?>
                 </td>
-                <td><input type="text" class="editText" name="editadres" value="<?php echo $name[0]["address"] ?>"></td>
+                <td><input type="text" class="inputTextForm" name="editadres" value="<?php echo $name[0]["address"] ?>"></td>
             </tr>
             <tr>
                 <td><b class="editUserText">Huisnummer</b></td>
@@ -145,7 +138,7 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
                 <?php if (isset($inputError['huisnummer'])) {
                     print("<label class='inputError'><i>Huisnummer voldoet niet aan de eisen</i></label><br>");
                 } ?>
-                <td><input type="text" class="editText" name="edithuisnummer" value="<?php echo $name[0]["Housenumber"] ?>"></td>
+                <td><input type="text" class="inputTextForm" name="edithuisnummer" value="<?php echo $name[0]["Housenumber"] ?>"></td>
             </tr>
             <tr>
                 <td><b class="editUserText">Toevoeging</b></td>
@@ -153,7 +146,7 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
                 <?php if (isset($inputError['huisnummerT'])) {
                     print("<label class='inputError'><i>Huisnummer toevoeging voldoet niet aan de eisen</i></label><br>");
                 } ?>
-                <td><input type="text" class="editText" name="edithuisnummerT" value="<?php echo $name[0]["Addition"] ?>"></td>
+                <td><input type="text" class="inputTextForm" name="edithuisnummerT" value="<?php echo $name[0]["Addition"] ?>"></td>
             </tr>
             <tr>
                 <td><b class="editUserText">Postcode</b></td>
@@ -161,7 +154,7 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
                 <?php if (isset($inputError['postcode'])) {
                     print("<label class='inputError'><i>Postcode voldoet niet aan de eisen</i></label><br>");
                 } ?>
-                <td><input type="text" class="editText" name="editpostcode" value="<?php echo $name[0]["ZIP_code"] ?>"></td>
+                <td><input type="text" class="inputTextForm" name="editpostcode" value="<?php echo $name[0]["ZIP_code"] ?>"></td>
             </tr>
             <tr>
                 <td><b class="editUserText">Woonplaats</b>
@@ -170,10 +163,10 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
                         print("<label class='inputError'><i>Woonplaats voldoet niet aan de eisen</i></label><br>");
                     } ?>
                 </td>
-                <td><input type="text" class="editText" name="editwoonplaats" value="<?php echo $name[0]["residence"] ?>"></td>
+                <td><input type="text" class="inputTextForm" name="editwoonplaats" value="<?php echo $name[0]["residence"] ?>"></td>
             </tr>
             <tr>
-                <td><input type="submit" value="opslaan" name="accountGegevensAanpassen"></td>
+                <td><input class="button2" type="submit" value="opslaan" name="accountGegevensAanpassen"></td>
             </tr>
         </form>
         <tr>
@@ -194,7 +187,7 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
                         print("<label class='inputError'><i>Het oude wachtwoord is fout</i></label><br>");
                     } ?>
                 </td>
-                <td><input type="password" class="editText" name="oldPassword"></td>
+                <td><input type="password" class="inputTextForm" name="oldPassword"></td>
             </tr>
             <tr>
                 <td>
@@ -204,7 +197,7 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
                         print("<label class='inputError'><i>Het nieuwe wachtwoord voldoet niet aan de eisen</i></label><br>");
                     } ?>
                 </td>
-                <td><input type="password" class="editText" name="newPassword"></td>
+                <td><input type="password" class="inputTextForm" name="newPassword"></td>
             </tr>
             <tr>
                 <td>
@@ -214,13 +207,20 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
                         print("<label class='inputError'><i>het nieuwe wachtwoord komt niet overeen</i></label><br>");
                     } ?>
                 </td>
-                <td><input type="password" class="editText" name="newPasswordRepeat"></td>
+                <td><input type="password" class="inputTextForm" name="newPasswordRepeat"></td>
             </tr>
             <tr>
-                <td><input type="submit" value="opslaan" name="changePassword"></td>
+                <td><input class="button2" type="submit" value="opslaan" name="changePassword"></td>
             </tr>
         </form>
+        <tr>
+            <td>
+                <form method="post" action="Logout.php">
+                    <input class="button2" type="submit" value="uitloggen">
+                </form>
+            </td>
+        </tr>
     </table>
 </body>
-
+<?php include 'footer.php'; ?>
 </html>
