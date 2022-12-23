@@ -111,7 +111,7 @@ include_once "cartfuncties.php";
             <?php
             if (count($cart) > 0) {
             ?>
-                <a href="Order.php">
+                    <a href="orderconfirmation.php" onclick="window.open('http://localhost/nerdygadgets/Order.php')">
                     <button class="button2" style="padding: 5px;">Bestellen</button>
                 <?php
             } else {
@@ -120,7 +120,8 @@ include_once "cartfuncties.php";
                 <?php
             }
                 ?>
-                </a>
+                    </a>
+
                 <img class="idealImage" src="Public/Img/ideal.png" alt="">
         </div>
     </div>
