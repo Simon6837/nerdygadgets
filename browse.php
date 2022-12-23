@@ -113,7 +113,7 @@ include_once __DIR__ . "/header.php";
     array_push($params, $ProductsOnPage, $Offset);
     $types .= "ii";
     // build the query
-    $Query = "SELECT SI.StockItemID, SI.StockItemName, SI.MarketingComments, TaxRate, RecommendedRetailPrice, ROUND(TaxRate * RecommendedRetailPrice / 100 + RecommendedRetailPrice,2) as SellPrice, QuantityOnHand, (SELECT ImagePath FROM stockitemimages WHERE StockItemID = SI.StockItemID LIMIT 1) as ImagePath, (SELECT ImagePath FROM stockgroups JOIN stockitemstockgroups USING(StockGroupID) WHERE StockItemID = SI.StockItemID LIMIT 1) as BackupImagePath FROM stockitems SI JOIN stockitemholdings SIH USING(stockitemid) " . $searchQuery .  " GROUP BY StockItemID ORDER BY SellPrice LIMIT ? OFFSET ? ";
+    $Query = "SELECT SI.StockItemID, SI.StockItemName, SI.MarketingComments, TaxRate, RecommendedRetailPrice, ROUND(TaxRate * RecommendedRetailPrice / 100 + RecommendedRetailPrice,2) as SellPrice, QuantityOnHand, (SELECT ImagePath FROM stockitemimages WHERE StockItemID = SI.StockItemID LIMIT 1) as ImagePath, (SELECT ImagePath FROM stockgroups JOIN stockitemstockgroups USING(StockGroupID) WHERE StockItemID = SI.StockItemID LIMIT 1) as BackupImagePath FROM stockitems SI JOIN stockitemholdings SIH USING(stockitemid) " . $searchQuery .  " GROUP BY StockItemID ORDER BY " . $Sort . " LIMIT ? OFFSET ? ";
     $Statement = mysqli_prepare($databaseConnection, $Query);
     mysqli_stmt_bind_param($Statement, $types, ...$params);
     mysqli_stmt_execute($Statement);
