@@ -5,7 +5,7 @@ $databaseConnection = connectToDatabase();
 if (isset($_SESSION['userdata']['loggedInUserId'])) {
     //set the data from the post to the data array for easier access
     $data["editE-mail"] = $_POST["editE-mail"] ?? "";
-    $data["editGbrnaam"] = $_POST["editGbrnaam"] ?? "";
+    $data["editFullname"] = $_POST["editFullname"] ?? "";
     $data["editadres"] = $_POST["editadres"] ?? "";
     $data["editwoonplaats"] = $_POST["editwoonplaats"] ?? "";
     $data["edithuisnummer"] = $_POST["edithuisnummer"] ?? "";
@@ -19,9 +19,9 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
             $valuesCorrect = false;
             $inputError['email'] = true;
         }
-        if (!usernameCheck($data['editGbrnaam'])) {
+        if (!usernameCheck($data['editFullname'])) {
             $valuesCorrect = false;
-            $inputError['gebruikersnaam'] = true;
+            $inputError['fullName'] = true;
         }
         if (specialCharCheck($data['editadres'])) {
             $valuesCorrect = false;
@@ -51,7 +51,7 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
         }
     }
     //Gets the customer data from the database
-    $nameDatabase = mysqli_prepare($databaseConnection, "SELECT logonname, EmailAddress, residence, address, Housenumber, Addition, ZIP_code FROM people WHERE personid = " . $_SESSION['userdata']['loggedInUserId'] . "");
+    $nameDatabase = mysqli_prepare($databaseConnection, "SELECT FullName, EmailAddress, residence, address, Housenumber, Addition, ZIP_code FROM people WHERE personid = " . $_SESSION['userdata']['loggedInUserId'] . "");
     mysqli_stmt_execute($nameDatabase);
     $nameResult = mysqli_stmt_get_result($nameDatabase);
     $name = mysqli_fetch_all($nameResult, MYSQLI_ASSOC);
@@ -114,11 +114,11 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
             <tr>
                 <td><b class="editUserText">Naam</b>
                     <br>
-                    <?php if (isset($inputError['gebruikersnaam'])) {
-                        print("<label class='inputError'><i>Gebruikernaam voldoet niet aan de eisen</i></label><br>");
+                    <?php if (isset($inputError['fullName'])) {
+                        print("<label class='inputError'><i>de naam voldoet niet aan de eisen</i></label><br>");
                     } ?>
                 </td>
-                <td><input type="text" class="inputTextForm" name="editGbrnaam" value="<?php echo $name[0]["logonname"] ?>"></td>
+                <td><input type="text" class="inputTextForm" name="editFullname" value="<?php echo $name[0]["FullName"] ?>"></td>
             </tr>
             <tr>
                 <td>
