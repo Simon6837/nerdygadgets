@@ -53,8 +53,8 @@ IsEmployee, IsSalesperson, EmailAddress, LastEditedBy, ValidFrom, ValidTo, House
 function klantGegevensBewerken($data)
 {
     $databaseConnection = connectToDatabase();
-    $editCustomer = mysqli_prepare($databaseConnection, "UPDATE people SET  FullName  = ?, EmailAddress = ?, residence = ?, address = ?, Housenumber = ?, Addition = ?, ZIP_code = ? WHERE personid = " . $_SESSION['userdata']['loggedInUserId'] . "");
-    mysqli_stmt_bind_param($editCustomer, 'ssssiss', $data["editFullname"], $data["editE-mail"], $data["editwoonplaats"], $data["editadres"], $data["edithuisnummer"], $data["edithuisnummerT"], $data["editpostcode"]);
+    $editCustomer = mysqli_prepare($databaseConnection, "UPDATE people SET logonName = ?, FullName  = ?, EmailAddress = ?, residence = ?, address = ?, Housenumber = ?, Addition = ?, ZIP_code = ? WHERE personid = " . $_SESSION['userdata']['loggedInUserId'] . "");
+    mysqli_stmt_bind_param($editCustomer, 'sssssiss', $data['editUserName'], $data["editFullname"], $data["editE-mail"], $data["editwoonplaats"], $data["editadres"], $data["edithuisnummer"], $data["edithuisnummerT"], $data["editpostcode"]);
     $result = mysqli_stmt_execute($editCustomer);
     mysqli_close($databaseConnection);
     return $result;
