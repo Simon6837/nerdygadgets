@@ -1,5 +1,6 @@
 <?php
 include_once __DIR__ . "/header.php";
+//this page is shown when the user successfully placed a order
 ?>
 
 <!DOCTYPE html>

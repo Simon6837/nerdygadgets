@@ -14,6 +14,7 @@ include_once "cartfuncties.php";
 
 <body>
     <?php
+    //set the session variables based on the post data if the user is not logged in
     if (!empty($_SESSION['postInfo'])) {
         $_SESSION["emailaddress"] = $_SESSION['postInfo']["E-mail"];
         $_SESSION["fullname"] = $_SESSION['postInfo']["naam"];
@@ -23,7 +24,7 @@ include_once "cartfuncties.php";
         $_SESSION["addition"] = $_SESSION['postInfo']["huisnummerT"];
         $_SESSION["ZIP_code"] = $_SESSION['postInfo']["postcode"];
     }
-
+    //set the session variables based on the userdata if the user is logged in
     if (!empty($_SESSION['userdata'])) {
         $_SESSION["emailaddress"] = $_SESSION['userdata']["emailaddress"];
         $_SESSION["fullname"] = $_SESSION['userdata']["fullname"];
@@ -36,12 +37,14 @@ include_once "cartfuncties.php";
     $cart = getCart();
     ?>
 
-    <div class="order-main" />
+    <div class="order-main">
     <!-- cart -->
     <div class="order-cart-container">
         <h2>Bestelling</h2>
         <?php
+        //calculate the total price of the order
         $total = 0;
+        //show the items in the cart
         foreach ($cart as $key => $item) {
             $StockItem = getStockItem($key, $databaseConnection);
             $exPrice = round($StockItem['SellPrice'] / 121 * 100, 2);

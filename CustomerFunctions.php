@@ -2,7 +2,10 @@
 include_once __DIR__ . "/header.php";
 include "DatabaseFunctions.php";
 
-// adds inputted values into the people table in the database
+/**
+ * @param $customerData -- array with all the customer data
+ * add a customer to the database
+ */ 
 function klantGegevensToevoegen($customerData)
 {
     $databaseConnection = connectToDatabase();
@@ -31,6 +34,7 @@ IsEmployee, IsSalesperson, EmailAddress, LastEditedBy, ValidFrom, ValidTo, House
     $result = mysqli_stmt_execute($insertCustomer);
     $last_id = mysqli_insert_id($databaseConnection);
     mysqli_close($databaseConnection);
+    //set the userdata in the session and log the user in
     $_SESSION['userdata']['loggedInUserId'] = $last_id;
     $_SESSION['userdata']['logonname'] = $customerData['Gbrnaam'];
     $_SESSION['userdata']['fullname'] = $customerData['naam'];
@@ -42,11 +46,13 @@ IsEmployee, IsSalesperson, EmailAddress, LastEditedBy, ValidFrom, ValidTo, House
     $_SESSION['userdata']['addition'] = $customerData['huisnummerT'];
     return $result;
 }
-
+/**
+ * @param $data -- array with all the customer data
+ * edit a customer in the database
+ */
 function klantGegevensBewerken($data)
 {
     $databaseConnection = connectToDatabase();
-    // $dateT = date('Ý-m-d H:i:s');
     $editCustomer = mysqli_prepare($databaseConnection, "UPDATE people SET  logonname = ?, EmailAddress = ?, residence = ?, address = ?, Housenumber = ?, Addition = ?, ZIP_code = ? WHERE personid = " . $_SESSION['userdata']['loggedInUserId'] . "");
     mysqli_stmt_bind_param($editCustomer, 'ssssiss', $data["editGbrnaam"], $data["editE-mail"], $data["editwoonplaats"], $data["editadres"], $data["edithuisnummer"], $data["edithuisnummerT"], $data["editpostcode"]);
     $result = mysqli_stmt_execute($editCustomer);
@@ -68,12 +74,25 @@ function specialCharCheck($haystack)
     }
     return false;
 }
-
+/**
+ * @param $email
+ * checks if email is valid
+ * @return bool
+ */
 function emailCheck($email)
 {
     return preg_match('/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/', $email);
 }
-
+/**
+ * @param $haystack
+ * checks if password is valid with the following rules
+ * 1. must contain at least 1 uppercase letter
+ * 2. must contain at least 1 lowercase letter
+ * 3. must contain at least 1 number
+ * 4. must contain at least 1 special character
+ * 5. must be at least 12 characters long
+ * @return bool
+ */
 function passwordCheck($haystack)
 {
     $uppercase = preg_match('@[A-Z]@', $haystack);
@@ -83,27 +102,51 @@ function passwordCheck($haystack)
     return $uppercase && $lowercase && $number && $specialChars && strlen($haystack >= 12);
 };
 
+/**
+ * @param $haystack
+ * checks if username is valid with the following rules
+ * 1. must be between 3 and 20 characters long
+ * 2. must not contain @
+ * @return bool
+ */
 function usernameCheck($haystack)
 {
     return (2 < strlen($haystack) && strlen($haystack) < 21) && !str_contains($haystack, '@');
 };
-
+/**
+ * @param $haystack
+ * checks if name is valid with the following rules
+ * 1. firrst 4 characters must be letters
+ * 2. last 2 characters must be a number
+ * @return bool
+ */
 function PostalCodeCheck($haystack)
 {
     return is_numeric(substr($haystack, 0, -2)) && ctype_alpha(substr($haystack, 4));
 }
-
+/**
+ * @param $haystack
+ * checks if name is valid with the following rules
+ * 1. must be a number
+ * @return bool
+ */
 function HuisnummerCheck($haystack)
 {
     return is_numeric($haystack);
 }
 
+/**
+ * @param $haystack
+ * check if addition is valid with the following rules
+ * 1. must be a letter
+ * @return bool
+ */
 function ToevoegingCheck($haystack)
 {
     return ctype_alpha($haystack);
 }
 
-/*
+/**
 * Get the hashed password from the database
 * @return string - The hashed password
 */
@@ -118,7 +161,7 @@ function getHashedPaswordFromDatabase()
     return $data[0]['HashedPassword'];
 }
 
-/*
+/**
 * Update the password in the database
 * @param $newPassword - The new password
 */
@@ -131,7 +174,7 @@ function updatePassword($newPassword)
     mysqli_stmt_execute($query);
     mysqli_close($databaseConnection);
 }
-/*
+/**
 * Checks if the old password is correct, if the new passwords match and if the new password meets the requirements
 * If all checks pass, the password is updated in the database
 * Returns an array with status and type
