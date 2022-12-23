@@ -78,31 +78,22 @@ function passwordCheck($haystack)
     $lowercase = preg_match('@[a-z]@', $haystack);
     $number    = preg_match('@[0-9]@', $haystack);
     $specialChars = preg_match('@[^\w]@', $haystack);
-    $check = $uppercase && $lowercase && $number && $specialChars && strlen($haystack >= 12);
-    return $check;
+    return $uppercase && $lowercase && $number && $specialChars && strlen($haystack >= 12);
 };
 
 function usernameCheck($haystack)
 {
-    $check = (2 < strlen($haystack) && strlen($haystack) < 21) && !str_contains($haystack, '@');
-    return $check;
+    return (2 < strlen($haystack) && strlen($haystack) < 21) && !str_contains($haystack, '@');
 };
 
 function PostalCodeCheck($haystack)
 {
-    $check1 = is_numeric(substr($haystack, 0, -2));
-    $check2 = ctype_alpha(substr($haystack, 4));
-    if ($check1 && $check2) {
-        return true;
-    } else {
-        return false;
-    }
+    return is_numeric(substr($haystack, 0, -2)) && ctype_alpha(substr($haystack, 4));
 }
 
 function HuisnummerCheck($haystack)
 {
-    $check = is_numeric($haystack);
-    return $check;
+    return is_numeric($haystack);
 }
 
 function ToevoegingCheck($haystack)

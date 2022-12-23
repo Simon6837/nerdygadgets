@@ -3,15 +3,11 @@ include_once __DIR__ . "/header.php";
 include_once 'CustomerFunctions.php';
 $databaseConnection = connectToDatabase();
 if (isset($_SESSION['userdata']['loggedInUserId'])) {
-    $nameDatabase = mysqli_prepare($databaseConnection, "SELECT logonname, EmailAddress, residence, address, Housenumber, Addition, ZIP_code FROM people WHERE personid = " . $_SESSION['userdata']['loggedInUserId'] . "");
-    mysqli_stmt_execute($nameDatabase);
-    $nameResult = mysqli_stmt_get_result($nameDatabase);
-    $name = mysqli_fetch_all($nameResult, MYSQLI_ASSOC);
 
-    $data["editE-mail"] = isset($_POST["editE-mail"]) ? $_POST["editE-mail"] : "";
-    $data["editGbrnaam"] = isset($_POST["editGbrnaam"]) ? $_POST["editGbrnaam"] : "";
-    $data["editadres"] = isset($_POST["editadres"]) ? $_POST["editadres"] : "";
-    $data["editwoonplaats"] = isset($_POST["editwoonplaats"]) ? $_POST["editwoonplaats"] : "";
+    $data["editE-mail"] = $_POST["editE-mail"] ?? "";
+    $data["editGbrnaam"] = $_POST["editGbrnaam"] ?? "";
+    $data["editadres"] = $_POST["editadres"] ?? "";
+    $data["editwoonplaats"] = $_POST["editwoonplaats"] ?? "";
     $data["edithuisnummer"] = $_POST["edithuisnummer"] ?? "";
     $data["editpostcode"] = $_POST["editpostcode"] ?? "";
     $data["edithuisnummerT"] = $_POST["edithuisnummerT"] ?? "";
@@ -54,10 +50,11 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
             klantGegevensBewerken($data);
             //hier komt een redirect als fix
         }
-        
-
     }
-
+    $nameDatabase = mysqli_prepare($databaseConnection, "SELECT logonname, EmailAddress, residence, address, Housenumber, Addition, ZIP_code FROM people WHERE personid = " . $_SESSION['userdata']['loggedInUserId'] . "");
+    mysqli_stmt_execute($nameDatabase);
+    $nameResult = mysqli_stmt_get_result($nameDatabase);
+    $name = mysqli_fetch_all($nameResult, MYSQLI_ASSOC);
     mysqli_close($databaseConnection);
 } else {
 ?>
@@ -94,13 +91,23 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
                 <h1>Accountgegevens</h1>
             </td>
         </tr>
-        <form method="post" action="edit.php">
+        <form method="post" action="editCustomer.php">
             <tr>
-                <td><b class="editUserText">Email</b></td>
+                <td><b class="editUserText">Email</b>
+                    <br>
+                    <?php if (isset($inputError['email'])) {
+                        print("<label class='inputError'><i>Ongeldig e-mailadres</i></label><br>");
+                    } ?>
+                </td>
                 <td><input type="text" class="editText" name="editE-mail" value="<?php echo $name[0]["EmailAddress"] ?>"></td>
             </tr>
             <tr>
-                <td><b class="editUserText">Naam</b><br><label class="smallTextDesc red"><i>Aantal karakters: 3-20, mag geen '@' bevatten</i></label></td>
+                <td><b class="editUserText">Naam</b>
+                    <br>
+                    <?php if (isset($inputError['gebruikersnaam'])) {
+                        print("<label class='inputError'><i>Gebruikernaam voldoet niet aan de eisen</i></label><br>");
+                    } ?>
+                </td>
                 <td><input type="text" class="editText" name="editGbrnaam" value="<?php echo $name[0]["logonname"] ?>"></td>
             </tr>
             <tr>
@@ -109,24 +116,46 @@ if (isset($_SESSION['userdata']['loggedInUserId'])) {
                 </td>
             </tr>
             <tr>
-                <td><b class="editUserText">Woonplaats</b></td>
-                <td><input type="text" class="editText" name="editwoonplaats" value="<?php echo $name[0]["residence"] ?>"></td>
-            </tr>
-            <tr>
-                <td><b class="editUserText">Adres</b></td>
+                <td><b class="editUserText">Adres</b>
+                    <br>
+                    <?php if (isset($inputError['adres'])) {
+                        print("<label class='inputError'><i>Adres voldoet niet aan de eisen</i></label><br>");
+                    } ?>
+                </td>
                 <td><input type="text" class="editText" name="editadres" value="<?php echo $name[0]["address"] ?>"></td>
             </tr>
             <tr>
                 <td><b class="editUserText">Huisnummer</b></td>
+                <br>
+                <?php if (isset($inputError['huisnummer'])) {
+                    print("<label class='inputError'><i>Huisnummer voldoet niet aan de eisen</i></label><br>");
+                } ?>
                 <td><input type="text" class="editText" name="edithuisnummer" value="<?php echo $name[0]["Housenumber"] ?>"></td>
             </tr>
             <tr>
                 <td><b class="editUserText">Toevoeging</b></td>
+                <br>
+                <?php if (isset($inputError['huisnummerT'])) {
+                    print("<label class='inputError'><i>Huisnummer toevoeging voldoet niet aan de eisen</i></label><br>");
+                } ?>
                 <td><input type="text" class="editText" name="edithuisnummerT" value="<?php echo $name[0]["Addition"] ?>"></td>
             </tr>
             <tr>
                 <td><b class="editUserText">Postcode</b></td>
+                <br>
+                <?php if (isset($inputError['postcode'])) {
+                    print("<label class='inputError'><i>Postcode voldoet niet aan de eisen</i></label><br>");
+                } ?>
                 <td><input type="text" class="editText" name="editpostcode" value="<?php echo $name[0]["ZIP_code"] ?>"></td>
+            </tr>
+            <tr>
+                <td><b class="editUserText">Woonplaats</b>
+                    <br>
+                    <?php if (isset($inputError['woonplaats'])) {
+                        print("<label class='inputError'><i>Woonplaats voldoet niet aan de eisen</i></label><br>");
+                    } ?>
+                </td>
+                <td><input type="text" class="editText" name="editwoonplaats" value="<?php echo $name[0]["residence"] ?>"></td>
             </tr>
             <tr>
                 <td><input type="submit" value="opslaan" name="accountGegevensAanpassen"></td>

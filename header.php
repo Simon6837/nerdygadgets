@@ -70,7 +70,7 @@ $databaseConnection = connectToDatabase();
                         <?php
                         if(isset($_SESSION['userdata']['loggedInUserId'])) {
                             ?>
-                            <a href="edit.php" class="HrefDecoration"><i class="fas fa-user red"></i></a><?php
+                            <a href="editCustomer.php" class="HrefDecoration"><i class="fas fa-user red"></i></a><?php
                         }
                         else {
                             ?><a href="login.php" class="HrefDecoration"><i class="fas fa-user red"></i></a><?php
